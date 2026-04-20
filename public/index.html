@@ -616,30 +616,71 @@
 
         .areas-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.25rem;
         }
 
-        .area-badge {
-            background-color: var(--white);
-            border: 2px solid var(--gold-accent);
-            color: var(--primary-dark);
-            padding: 1rem;
-            border-radius: 50px;
-            text-align: center;
-            font-weight: 500;
-            transition: all 0.3s ease;
+        .area-card {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 12px;
+            overflow: hidden;
             cursor: pointer;
+            box-shadow: 0 2px 12px rgba(0,0,0,.10);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .area-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 28px rgba(0,0,0,.18);
+        }
+
+        .area-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .area-card-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1A1A1A 0%, #2d2410 50%, #C4A860 100%);
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 60px;
+            gap: .5rem;
         }
 
-        .area-badge:hover {
-            background-color: var(--gold-accent);
-            color: var(--white);
-            transform: scale(1.05);
+        .area-card-placeholder svg {
+            width: 48px;
+            height: 48px;
+            opacity: .7;
+        }
+
+        .area-card-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: .75rem 1rem .85rem;
+            background: linear-gradient(to top, rgba(0,0,0,.75) 0%, transparent 100%);
+            color: #fff;
+            font-weight: 600;
+            font-size: .9rem;
+            text-align: center;
+        }
+
+        .area-card-placeholder .area-card-label {
+            position: static;
+            background: none;
+            color: rgba(255,255,255,.9);
+            padding: 0;
+            font-size: .85rem;
+            font-weight: 600;
+            letter-spacing: .03em;
         }
 
         /* Packages Section */
@@ -1122,7 +1163,7 @@
             }
 
             .areas-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .package-card.featured {
@@ -1352,31 +1393,8 @@
     <section class="areas-section" id="areas" data-aos="fade-up">
         <div class="areas-content">
             <h2>Areas We Serve in Dubai</h2>
-            <div class="areas-grid">
-                <div class="area-badge">Dubai Marina</div>
-                <div class="area-badge">Downtown Dubai</div>
-                <div class="area-badge">Palm Jumeirah</div>
-                <div class="area-badge">Dubai Hills</div>
-                <div class="area-badge">Arabian Ranches</div>
-                <div class="area-badge">Jumeirah</div>
-                <div class="area-badge">Victory Heights</div>
-                <div class="area-badge">Sports City</div>
-                <div class="area-badge">Motor City</div>
-                <div class="area-badge">JVC</div>
-                <div class="area-badge">JVT</div>
-                <div class="area-badge">Business Bay</div>
-                <div class="area-badge">Townsquare</div>
-                <div class="area-badge">Mira</div>
-                <div class="area-badge">Mudon</div>
-                <div class="area-badge">Silicon Oasis</div>
-                <div class="area-badge">Mirdif</div>
-                <div class="area-badge">DIP</div>
-                <div class="area-badge">Villanova</div>
-                <div class="area-badge">Serena</div>
-                <div class="area-badge">Damac Hills</div>
-                <div class="area-badge">Remraam</div>
-                <div class="area-badge">Springs</div>
-                <div class="area-badge">Greens</div>
+            <div class="areas-grid" id="areas-grid">
+                <div class="area-badge" style="opacity:.5">Loading...</div>
             </div>
         </div>
     </section>
@@ -1741,6 +1759,9 @@
     }
     </script>
 
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <!-- AOS Script -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
@@ -1938,6 +1959,42 @@
         document.querySelectorAll('.fade-up').forEach(el => {
             observer.observe(el);
         });
+
+        // Load areas from Supabase
+        (async function() {
+            const SUPABASE_URL = 'https://supabase.mobiweb.pt'
+            const SUPABASE_ANON_KEY = 'eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJyb2xlIjogImFub24iLCAiaXNzIjogInN1cGFiYXNlIiwgImlhdCI6IDE3NzY2OTA0OTYsICJleHAiOiAyMDkyMDUwNDk2fQ.umUlKtaceMo_mcUY9msIPqDRKQUPGypH-JJ3BHtAt94'
+            const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+            const grid = document.getElementById('areas-grid')
+
+            const { data, error } = await sb
+                .from('areas')
+                .select('name, image_url')
+                .eq('active', true)
+                .order('sort_order')
+
+            if (error || !data || !data.length) return
+
+            const locationIcon = `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="rgba(196,168,96,0.8)"/>
+            </svg>`
+
+            grid.innerHTML = data.map(a => {
+                const name = a.name.replace(/</g,'&lt;')
+                if (a.image_url) {
+                    return `<div class="area-card">
+                        <img src="${a.image_url}" alt="${name}" loading="lazy">
+                        <div class="area-card-label">${name}</div>
+                    </div>`
+                }
+                return `<div class="area-card">
+                    <div class="area-card-placeholder">
+                        ${locationIcon}
+                        <div class="area-card-label">${name}</div>
+                    </div>
+                </div>`
+            }).join('')
+        })()
     </script>
 </body>
 </html>
