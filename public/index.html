@@ -43,11 +43,17 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://unpkg.com">
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180x180.png">
+    <meta name="theme-color" content="#1A1A1A">
+
     <!-- Sitemap -->
     <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -904,6 +910,36 @@
             color: #e53e3e;
         }
 
+        .privacy-consent {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+        }
+
+        .privacy-consent input[type="checkbox"] {
+            flex-shrink: 0;
+            width: 17px;
+            height: 17px;
+            margin-top: 2px;
+            accent-color: var(--gold-accent);
+            cursor: pointer;
+        }
+
+        .privacy-consent label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            line-height: 1.5;
+        }
+
+        .privacy-consent label a {
+            color: var(--gold-accent);
+            text-decoration: none;
+        }
+
+        .privacy-consent label a:hover { text-decoration: underline; }
+
         .form-submit {
             width: 100%;
             padding: 1rem;
@@ -1171,6 +1207,61 @@
             }
         }
 
+        /* ── Language Toggle ─────────────────────────────────────── */
+        .lang-toggle {
+            background: transparent;
+            border: 1.5px solid rgba(196,168,96,0.5);
+            color: rgba(255,255,255,0.85);
+            padding: 0.4rem 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            font-family: 'Cairo', sans-serif;
+            line-height: 1;
+        }
+        .lang-toggle:hover {
+            border-color: var(--gold-accent);
+            color: var(--gold-accent);
+        }
+
+        /* ── RTL / Arabic overrides ──────────────────────────────── */
+        [dir="rtl"] body,
+        [dir="rtl"] input,
+        [dir="rtl"] textarea,
+        [dir="rtl"] select,
+        [dir="rtl"] button { font-family: 'Cairo', sans-serif; }
+
+        [dir="rtl"] h1,[dir="rtl"] h2,[dir="rtl"] h3,
+        [dir="rtl"] h4,[dir="rtl"] h5,[dir="rtl"] h6 {
+            font-family: 'Cairo', sans-serif;
+            letter-spacing: 0;
+        }
+        [dir="rtl"] .hero h1 { letter-spacing: 0; }
+        /* Nav underline anchors from right in RTL */
+        [dir="rtl"] nav a::after { left: auto; right: 0; }
+        /* Decorative circle flips to left */
+        [dir="rtl"] .about-visual::before { right: auto; left: -20px; }
+        /* Package list text-align */
+        [dir="rtl"] .package-card ul { text-align: right; }
+        /* WhatsApp button moves to left side */
+        [dir="rtl"] .whatsapp-float  { right: auto; left: 30px; }
+        [dir="rtl"] .whatsapp-tooltip { right: auto; left: 70px; }
+        /* Form text alignment */
+        [dir="rtl"] .form-group input,
+        [dir="rtl"] .form-group select,
+        [dir="rtl"] .form-group textarea { text-align: right; }
+        /* Flip "Learn More" arrow */
+        [dir="rtl"] .learn-more .fa-arrow-right {
+            display: inline-block;
+            transform: scaleX(-1);
+        }
+        @media (max-width: 768px) {
+            [dir="rtl"] .whatsapp-float { left: 20px; right: auto; }
+        }
+
         /* Scroll Animation */
         .fade-up {
             opacity: 0;
@@ -1192,14 +1283,15 @@
                 <img src="logo.png" alt="IMP Douro - Property Maintenance & Renovation Dubai">
             </a>
             <nav id="nav-menu" aria-label="Main navigation">
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#services">Services</a>
-                <a href="#areas">Areas</a>
-                <a href="#packages">Packages</a>
-                <a href="#contact">Contact</a>
+                <a href="#home"     data-i18n="nav.home">Home</a>
+                <a href="#about"    data-i18n="nav.about">About</a>
+                <a href="#services" data-i18n="nav.services">Services</a>
+                <a href="#areas"    data-i18n="nav.areas">Areas</a>
+                <a href="#packages" data-i18n="nav.packages">Packages</a>
+                <a href="#contact"  data-i18n="nav.contact">Contact</a>
             </nav>
-            <button class="cta-button" onclick="scrollToSection('contact')">Get Free Quote</button>
+            <button class="cta-button" onclick="scrollToSection('contact')" data-i18n="nav.cta">Get Free Quote</button>
+            <button class="lang-toggle" id="langToggle" aria-label="Switch language">عربي</button>
             <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
                 <span></span>
                 <span></span>
@@ -1211,25 +1303,25 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <h1>Dubai's Trusted Property Maintenance & Renovation Experts</h1>
+            <h1 data-i18n="hero.title">Dubai's Trusted Property Maintenance & Renovation Experts</h1>
             <div class="gold-line"></div>
-            <p>Professional maintenance, painting, landscaping and renovation services for villas, apartments and commercial properties across Dubai.</p>
+            <p data-i18n="hero.subtitle">Professional maintenance, painting, landscaping and renovation services for villas, apartments and commercial properties across Dubai.</p>
             <div class="hero-buttons">
-                <button class="cta-button" onclick="scrollToSection('contact')">Get a Free Quote</button>
-                <button class="cta-button-outline" onclick="scrollToSection('services')">Our Services</button>
+                <button class="cta-button" onclick="scrollToSection('contact')" data-i18n="hero.cta_quote">Get a Free Quote</button>
+                <button class="cta-button-outline" onclick="scrollToSection('services')" data-i18n="hero.cta_services">Our Services</button>
             </div>
             <div class="stats-badges">
                 <div class="stat-badge">
                     <div class="stat-number">100+</div>
-                    <div class="stat-label">Projects Completed</div>
+                    <div class="stat-label" data-i18n="hero.stat1">Projects Completed</div>
                 </div>
                 <div class="stat-badge">
                     <div class="stat-number">5★</div>
-                    <div class="stat-label">Client Rating</div>
+                    <div class="stat-label" data-i18n="hero.stat2">Client Rating</div>
                 </div>
                 <div class="stat-badge">
                     <div class="stat-number">24/7</div>
-                    <div class="stat-label">Support Available</div>
+                    <div class="stat-label" data-i18n="hero.stat3">Support Available</div>
                 </div>
             </div>
         </div>
@@ -1238,62 +1330,15 @@
     <!-- Services Section -->
     <section class="services-section" id="services" data-aos="fade-up">
         <div class="section-title">
-            <h2>Our Professional Services</h2>
+            <h2 data-i18n="services.title">Our Professional Services</h2>
             <div class="gold-line"></div>
         </div>
-        <div class="services-grid">
+        <div class="services-grid" id="services-grid">
             <div class="service-card" data-aos="fade-up" data-aos-delay="0">
-                <div class="service-icon">
-                    <i class="fas fa-wrench"></i>
-                </div>
+                <div class="service-icon"><i class="fas fa-wrench"></i></div>
                 <h3>Property Maintenance Dubai</h3>
                 <p>Comprehensive maintenance services including electrical, plumbing, AC repairs, and general upkeep for your property.</p>
                 <a href="javascript:void(0)" onclick="scrollToContactWithService('Property Maintenance')" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="service-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="service-icon">
-                    <i class="fas fa-house"></i>
-                </div>
-                <h3>Renovations & Refurbishments</h3>
-                <p>Complete kitchen, bathroom, and full property renovations with modern designs and quality craftsmanship.</p>
-                <a href="javascript:void(0)" onclick="scrollToContactWithService('Renovations')" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="service-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="service-icon">
-                    <i class="fas fa-paint-roller"></i>
-                </div>
-                <h3>Painting Services Dubai</h3>
-                <p>Interior and exterior painting for villas, apartments, and commercial spaces. Premium finishes with quality materials.</p>
-                <a href="javascript:void(0)" onclick="scrollToContactWithService('Painting Services')" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="service-card" data-aos="fade-up" data-aos-delay="300">
-                <div class="service-icon">
-                    <i class="fas fa-building"></i>
-                </div>
-                <h3>Villa Maintenance Dubai</h3>
-                <p>Regular maintenance packages designed specifically for villas. Customized plans to suit your needs and budget.</p>
-                <a href="javascript:void(0)" onclick="scrollToContactWithService('Villa Maintenance')" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="service-card" data-aos="fade-up" data-aos-delay="400">
-                <div class="service-icon">
-                    <i class="fas fa-leaf"></i>
-                </div>
-                <h3>Landscaping & Garden Maintenance</h3>
-                <p>Garden design, irrigation systems, lawn care, and landscaping services to keep your outdoor spaces beautiful.</p>
-                <a href="javascript:void(0)" onclick="scrollToContactWithService('Landscaping')" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="service-card" data-aos="fade-up" data-aos-delay="500">
-                <div class="service-icon">
-                    <i class="fas fa-hammer"></i>
-                </div>
-                <h3>Handyman Services Dubai</h3>
-                <p>Expert assembly, installations, and small repair services for homes and offices. Quick, reliable, and professional.</p>
-                <a href="javascript:void(0)" onclick="scrollToContactWithService('Handyman Services')" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
     </section>
@@ -1301,45 +1346,45 @@
     <!-- Why Choose Us Section -->
     <section class="why-choose" data-aos="fade-up">
         <div class="why-choose-content">
-            <h2>Why Choose IMP Douro</h2>
+            <h2 data-i18n="why.title">Why Choose IMP Douro</h2>
             <div class="stats-grid">
                 <div class="stat-item">
                     <div class="number">100+</div>
-                    <div class="label">Projects Completed</div>
+                    <div class="label" data-i18n="why.stat1">Projects Completed</div>
                 </div>
                 <div class="stat-item">
                     <div class="number">10+</div>
-                    <div class="label">Years Experience</div>
+                    <div class="label" data-i18n="why.stat2">Years Experience</div>
                 </div>
                 <div class="stat-item">
                     <div class="number">24/7</div>
-                    <div class="label">Customer Support</div>
+                    <div class="label" data-i18n="why.stat3">Customer Support</div>
                 </div>
                 <div class="stat-item">
                     <div class="number">100%</div>
-                    <div class="label">Satisfaction Rate</div>
+                    <div class="label" data-i18n="why.stat4">Satisfaction Rate</div>
                 </div>
             </div>
             <div class="features-list">
                 <div class="feature-item">
                     <i class="fas fa-check-circle"></i>
-                    <span>Licensed & Certified Professionals</span>
+                    <span data-i18n="why.feat1">Licensed & Certified Professionals</span>
                 </div>
                 <div class="feature-item">
                     <i class="fas fa-check-circle"></i>
-                    <span>Fast Response Time</span>
+                    <span data-i18n="why.feat2">Fast Response Time</span>
                 </div>
                 <div class="feature-item">
                     <i class="fas fa-check-circle"></i>
-                    <span>Transparent Pricing</span>
+                    <span data-i18n="why.feat3">Transparent Pricing</span>
                 </div>
                 <div class="feature-item">
                     <i class="fas fa-check-circle"></i>
-                    <span>Quality Materials Used</span>
+                    <span data-i18n="why.feat4">Quality Materials Used</span>
                 </div>
                 <div class="feature-item">
                     <i class="fas fa-check-circle"></i>
-                    <span>Residential & Commercial Services</span>
+                    <span data-i18n="why.feat5">Residential & Commercial Services</span>
                 </div>
             </div>
         </div>
@@ -1349,40 +1394,32 @@
     <section class="about-section" id="about" data-aos="fade-up">
         <div class="about-content">
             <div class="about-text">
-                <h2>About IMP Douro</h2>
-                <p>IMP Douro is Dubai's leading property maintenance and renovation company, dedicated to providing comprehensive solutions for residential and commercial properties. With over a decade of experience, we have successfully completed 100+ projects across Dubai.</p>
-                <p>Our team of licensed and certified professionals is committed to delivering exceptional service quality, transparent pricing, and customer satisfaction. We specialize in a wide range of services including property maintenance, handyman work, painting, landscaping, and complete renovations.</p>
-                <p>Whether you need regular maintenance, emergency repairs, or a complete property overhaul, IMP Douro is your trusted partner in Dubai.</p>
+                <h2 data-i18n="about.title">About IMP Douro</h2>
+                <p data-i18n="about.p1">IMP Douro is Dubai's leading property maintenance and renovation company, dedicated to providing comprehensive solutions for residential and commercial properties. With over a decade of experience, we have successfully completed 100+ projects across Dubai.</p>
+                <p data-i18n="about.p2">Our team of licensed and certified professionals is committed to delivering exceptional service quality, transparent pricing, and customer satisfaction. We specialize in a wide range of services including property maintenance, handyman work, painting, landscaping, and complete renovations.</p>
+                <p data-i18n="about.p3">Whether you need regular maintenance, emergency repairs, or a complete property overhaul, IMP Douro is your trusted partner in Dubai.</p>
             </div>
             <div class="about-visual">
                 <div class="about-key">
                     <div class="key-item">
                         <i class="fas fa-shield-alt"></i>
-                        <div>
-                            <strong>Quality Assurance</strong>
-                            Premium materials and professional workmanship guaranteed on every project.
-                        </div>
+                        <div data-i18n-html="about.qa"><strong>Quality Assurance</strong>
+                            Premium materials and professional workmanship guaranteed on every project.</div>
                     </div>
                     <div class="key-item">
                         <i class="fas fa-clock"></i>
-                        <div>
-                            <strong>Timely Delivery</strong>
-                            We respect your time and ensure projects are completed on schedule.
-                        </div>
+                        <div data-i18n-html="about.td"><strong>Timely Delivery</strong>
+                            We respect your time and ensure projects are completed on schedule.</div>
                     </div>
                     <div class="key-item">
                         <i class="fas fa-headset"></i>
-                        <div>
-                            <strong>Customer Support</strong>
-                            24/7 support available to address your concerns and queries.
-                        </div>
+                        <div data-i18n-html="about.cs"><strong>Customer Support</strong>
+                            24/7 support available to address your concerns and queries.</div>
                     </div>
                     <div class="key-item">
                         <i class="fas fa-certificate"></i>
-                        <div>
-                            <strong>Licensed & Certified</strong>
-                            All our professionals are fully licensed and certified.
-                        </div>
+                        <div data-i18n-html="about.lc"><strong>Licensed &amp; Certified</strong>
+                            All our professionals are fully licensed and certified.</div>
                     </div>
                 </div>
             </div>
@@ -1392,7 +1429,7 @@
     <!-- Areas Section -->
     <section class="areas-section" id="areas" data-aos="fade-up">
         <div class="areas-content">
-            <h2>Areas We Serve in Dubai</h2>
+            <h2 data-i18n="areas.title">Areas We Serve in Dubai</h2>
             <div class="areas-grid" id="areas-grid">
                 <div class="area-badge" style="opacity:.5">Loading...</div>
             </div>
@@ -1401,58 +1438,21 @@
 
     <!-- Packages Section -->
     <section class="packages-section" id="packages" data-aos="fade-up">
-        <h2>Villa Maintenance Packages</h2>
-        <div class="packages-grid">
-            <div class="package-card" data-aos="fade-up" data-aos-delay="0">
-                <h3>Basic Package</h3>
-                <ul>
-                    <li><i class="fas fa-check"></i> AC Check & Filter Change</li>
-                    <li><i class="fas fa-check"></i> Basic Plumbing Inspection</li>
-                    <li><i class="fas fa-check"></i> Light Bulb & Fixture Check</li>
-                    <li><i class="fas fa-check"></i> Door Lock Inspection</li>
-                </ul>
-                <button class="package-button" onclick="scrollToSection('contact')">Get Quote</button>
-            </div>
-
-            <div class="package-card featured" data-aos="fade-up" data-aos-delay="100">
-                <div class="featured-badge">Most Popular</div>
-                <h3>Standard Package</h3>
-                <ul>
-                    <li><i class="fas fa-check"></i> AC Servicing & Filter Change</li>
-                    <li><i class="fas fa-check"></i> Plumbing Inspection & Repairs</li>
-                    <li><i class="fas fa-check"></i> Electrical System Inspection</li>
-                    <li><i class="fas fa-check"></i> General Maintenance Works</li>
-                    <li><i class="fas fa-check"></i> Preventive Checks</li>
-                </ul>
-                <button class="package-button" onclick="scrollToSection('contact')">Get Quote</button>
-            </div>
-
-            <div class="package-card" data-aos="fade-up" data-aos-delay="200">
-                <h3>Premium Package</h3>
-                <ul>
-                    <li><i class="fas fa-check"></i> Full AC Maintenance & Cleaning</li>
-                    <li><i class="fas fa-check"></i> Complete Plumbing Service</li>
-                    <li><i class="fas fa-check"></i> Electrical System Full Check</li>
-                    <li><i class="fas fa-check"></i> Garden & Landscaping Maintenance</li>
-                    <li><i class="fas fa-check"></i> All Repairs & Replacements</li>
-                    <li><i class="fas fa-check"></i> Priority Support</li>
-                </ul>
-                <button class="package-button" onclick="scrollToSection('contact')">Get Quote</button>
-            </div>
-        </div>
+        <h2 data-i18n="pkg.title">Villa Maintenance Packages</h2>
+        <div class="packages-grid" id="packages-grid"></div>
     </section>
 
     <!-- Contact Section -->
     <section class="contact-section" id="contact" data-aos="fade-up">
         <div class="contact-content">
             <div class="contact-info">
-                <h2>Get in Touch With Us</h2>
-                <p style="color: var(--body-text); margin-bottom: 2rem;">Have questions? We'd love to hear from you. Get in touch with our team for a free quote or consultation.</p>
+                <h2 data-i18n="contact.title">Get in Touch With Us</h2>
+                <p style="color: var(--body-text); margin-bottom: 2rem;" data-i18n="contact.subtitle">Have questions? We'd love to hear from you. Get in touch with our team for a free quote or consultation.</p>
 
                 <div class="contact-method">
                     <i class="fas fa-phone"></i>
                     <div class="contact-method-text">
-                        <h3>Phone</h3>
+                        <h3 data-i18n="contact.phone">Phone</h3>
                         <p><a href="tel:+971564641047">+971 56 464 1047</a></p>
                     </div>
                 </div>
@@ -1460,7 +1460,7 @@
                 <div class="contact-method">
                     <i class="fas fa-envelope"></i>
                     <div class="contact-method-text">
-                        <h3>Email</h3>
+                        <h3 data-i18n="contact.email">Email</h3>
                         <p><a href="mailto:douroimp@gmail.com">douroimp@gmail.com</a></p>
                     </div>
                 </div>
@@ -1468,7 +1468,7 @@
                 <div class="contact-method">
                     <i class="fas fa-comments"></i>
                     <div class="contact-method-text">
-                        <h3>WhatsApp</h3>
+                        <h3 data-i18n="contact.whatsapp">WhatsApp</h3>
                         <p><a href="https://wa.me/971564641047" target="_blank">+971 56 464 1047</a></p>
                     </div>
                 </div>
@@ -1476,56 +1476,61 @@
                 <div class="contact-method">
                     <i class="fas fa-map-marker-alt"></i>
                     <div class="contact-method-text">
-                        <h3>Location</h3>
-                        <p>Dubai, UAE</p>
+                        <h3 data-i18n="contact.location">Location</h3>
+                        <p data-i18n="contact.dubai">Dubai, UAE</p>
                     </div>
                 </div>
             </div>
 
             <div class="contact-form">
-                <h3>Send us a Message</h3>
+                <h3 data-i18n="contact.form_title">Send us a Message</h3>
                 <form id="contactForm" aria-label="Contact form for property maintenance inquiry">
                     <div class="form-group">
-                        <label for="name">Full Name <span class="required">*</span></label>
+                        <label for="name"><span data-i18n="contact.name">Full Name</span> <span class="required">*</span></label>
                         <input type="text" id="name" name="name" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="phone">Phone Number <span class="required">*</span></label>
+                        <label for="phone"><span data-i18n="contact.phone_lbl">Phone Number</span> <span class="required">*</span></label>
                         <input type="tel" id="phone" name="phone" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="service">Service Needed <span class="required">*</span></label>
+                        <label for="service"><span data-i18n="contact.service">Service Needed</span> <span class="required">*</span></label>
                         <select id="service" name="service" required>
-                            <option value="">Select a service</option>
-                            <option value="Property Maintenance">Property Maintenance</option>
-                            <option value="Handyman Services">Handyman Services</option>
-                            <option value="Painting Services">Painting Services</option>
-                            <option value="Landscaping">Landscaping & Garden Maintenance</option>
-                            <option value="Renovations">Renovations & Refurbishments</option>
-                            <option value="Villa Maintenance">Villa Maintenance</option>
+                            <option value=""        data-i18n="contact.svc_ph">Select a service</option>
+                            <option value="Property Maintenance" data-i18n="contact.svc_maint">Property Maintenance</option>
+                            <option value="Handyman Services"    data-i18n="contact.svc_hand">Handyman Services</option>
+                            <option value="Painting Services"    data-i18n="contact.svc_paint">Painting Services</option>
+                            <option value="Landscaping"          data-i18n="contact.svc_land">Landscaping &amp; Garden Maintenance</option>
+                            <option value="Renovations"          data-i18n="contact.svc_reno">Renovations &amp; Refurbishments</option>
+                            <option value="Villa Maintenance"    data-i18n="contact.svc_villa">Villa Maintenance</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="property">Property Type <span class="required">*</span></label>
+                        <label for="property"><span data-i18n="contact.prop">Property Type</span> <span class="required">*</span></label>
                         <select id="property" name="property_type" required>
-                            <option value="">Select property type</option>
-                            <option value="Villa">Villa</option>
-                            <option value="Apartment">Apartment</option>
-                            <option value="Office">Office</option>
-                            <option value="Commercial">Commercial Space</option>
-                            <option value="Other">Other</option>
+                            <option value=""           data-i18n="contact.prop_ph">Select property type</option>
+                            <option value="Villa"      data-i18n="contact.prop_villa">Villa</option>
+                            <option value="Apartment"  data-i18n="contact.prop_apt">Apartment</option>
+                            <option value="Office"     data-i18n="contact.prop_off">Office</option>
+                            <option value="Commercial" data-i18n="contact.prop_comm">Commercial Space</option>
+                            <option value="Other"      data-i18n="contact.prop_other">Other</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" placeholder="Tell us about your project..."></textarea>
+                        <label for="message" data-i18n="contact.message">Message</label>
+                        <textarea id="message" name="message" data-i18n-ph="contact.msg_ph" placeholder="Tell us about your project..."></textarea>
                     </div>
 
-                    <button type="submit" class="form-submit">Send Message</button>
+                    <div class="privacy-consent">
+                        <input type="checkbox" id="privacyConsent" name="privacyConsent">
+                        <label for="privacyConsent" id="privacyConsentLabel">I have read and agree to the <a href="/privacy.html" target="_blank">Privacy Policy</a></label>
+                    </div>
+
+                    <button type="submit" class="form-submit" data-i18n="contact.submit">Send Message</button>
                     <div class="form-message" id="formMessage"></div>
                 </form>
             </div>
@@ -1537,27 +1542,22 @@
         <div class="footer-content">
             <div class="footer-column">
                 <h4>IMP Douro</h4>
-                <p>Dubai's trusted property maintenance and renovation experts. Professional services for residential and commercial properties.</p>
+                <p data-i18n="footer.tagline">Dubai's trusted property maintenance and renovation experts. Professional services for residential and commercial properties.</p>
             </div>
 
             <div class="footer-column">
-                <h4>Services</h4>
-                <ul>
-                    <li><a href="#services">Property Maintenance</a></li>
-                    <li><a href="#services">Handyman Services</a></li>
-                    <li><a href="#services">Painting Services</a></li>
-                    <li><a href="#services">Landscaping</a></li>
-                    <li><a href="#services">Renovations</a></li>
-                    <li><a href="#services">Villa Maintenance</a></li>
+                <h4 data-i18n="footer.services">Services</h4>
+                <ul id="footer-services-list">
+                    <li><a href="#services" data-i18n="nav.services">Services</a></li>
                 </ul>
             </div>
 
             <div class="footer-column">
-                <h4>Contact Info</h4>
+                <h4 data-i18n="footer.contact">Contact Info</h4>
                 <ul>
                     <li><a href="tel:+971564641047">+971 56 464 1047</a></li>
                     <li><a href="mailto:douroimp@gmail.com">douroimp@gmail.com</a></li>
-                    <li><a href="https://wa.me/971564641047" target="_blank">WhatsApp Chat</a></li>
+                    <li><a href="https://wa.me/971564641047" target="_blank" data-i18n="footer.whatsapp">WhatsApp Chat</a></li>
                     <li>Dubai, UAE</li>
                     <li><a href="https://www.instagram.com/imp.douro?utm_source=qr&igsh=djRzd2F3enIzMnBn" target="_blank" title="Follow us on Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; display: inline-block;"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><circle cx="17.5" cy="6.5" r="1.5"></circle></svg></a></li>
                 </ul>
@@ -1566,9 +1566,10 @@
 
         <div class="footer-bottom">
             <div class="powered-by">
-                Powered by <a href="https://mobiweb.ae" target="_blank">Mobiweb</a>
+                <span data-i18n="footer.powered">Powered by</span> <a href="https://mobiweb.ae" target="_blank">Mobiweb</a>
             </div>
-            <p>&copy; 2025 IMP Douro. All rights reserved.</p>
+            <p data-i18n="footer.copyright">&copy; 2026 IMP Douro. All rights reserved.</p>
+            <p style="margin-top:0.5rem;font-size:0.8rem;"><a href="/privacy.html" data-i18n="footer.privacy" style="color:var(--gold-accent);text-decoration:none;opacity:0.8;">Privacy Policy</a></p>
         </div>
     </footer>
 
@@ -1577,7 +1578,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24" height="24">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.272-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004c-1.052 0-2.082.256-2.986.748l-.214.126-2.213-.581.592 2.165-.139.224c-.537.86-.82 1.86-.82 2.895 0 2.965 2.412 5.377 5.377 5.377h.005c1.38 0 2.68-.53 3.66-1.494.985-.963 1.532-2.24 1.536-3.594 0-2.965-2.412-5.378-5.377-5.378M20.52 3.449C18.24 1.245 15.267 0 12.1 0 5.495 0 .16 5.335.16 11.9c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654c1.746.943 3.718 1.44 5.738 1.44 6.605 0 11.94-5.335 11.94-11.94 0-3.176-1.279-6.145-3.401-8.357Z"/>
         </svg>
-        <div class="whatsapp-tooltip">Chat with us</div>
+        <div class="whatsapp-tooltip" data-i18n="wa.tooltip">Chat with us</div>
     </a>
 
     <!-- Schema.org: LocalBusiness (Primary) -->
@@ -1759,9 +1760,6 @@
     }
     </script>
 
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
     <!-- AOS Script -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
@@ -1847,14 +1845,19 @@
             const message = document.getElementById('message').value.trim();
 
             if (!name || !phone || !service || !propertyType) {
-                showMessage('Please fill in all required fields.', 'error');
+                showMessage(t('form.required'), 'error');
+                return;
+            }
+
+            if (!document.getElementById('privacyConsent').checked) {
+                showMessage(t('form.privacy_required'), 'error');
                 return;
             }
 
             // Phone number validation (basic)
             const phoneRegex = /^[\d\s\-\+\(\)]+$/;
             if (!phoneRegex.test(phone) || phone.length < 7) {
-                showMessage('Please enter a valid phone number.', 'error');
+                showMessage(t('form.phone_err'), 'error');
                 return;
             }
 
@@ -1870,7 +1873,7 @@
             // Show loading state
             const submitButton = contactForm.querySelector('.form-submit');
             const originalText = submitButton.textContent;
-            submitButton.textContent = 'Sending...';
+            submitButton.textContent = t('form.sending');
             submitButton.disabled = true;
 
             try {
@@ -1887,11 +1890,11 @@
                 });
 
                 // With no-cors the response is always opaque — show success unconditionally.
-                showMessage('Thank you! We\'ll contact you soon.', 'success');
+                showMessage(t('form.success'), 'success');
                 contactForm.reset();
             } catch (error) {
                 console.error('Form submission error:', error);
-                showMessage('An error occurred. Please try again or call us directly.', 'error');
+                showMessage(t('form.error'), 'error');
             } finally {
                 submitButton.textContent = originalText;
                 submitButton.disabled = false;
@@ -1960,41 +1963,406 @@
             observer.observe(el);
         });
 
-        // Load areas from Supabase
-        (async function() {
-            const SUPABASE_URL = 'https://supabase.mobiweb.pt'
-            const SUPABASE_ANON_KEY = 'eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJyb2xlIjogImFub24iLCAiaXNzIjogInN1cGFiYXNlIiwgImlhdCI6IDE3NzY2OTA0OTYsICJleHAiOiAyMDkyMDUwNDk2fQ.umUlKtaceMo_mcUY9msIPqDRKQUPGypH-JJ3BHtAt94'
-            const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-            const grid = document.getElementById('areas-grid')
+        // Load services and areas from Supabase
+        ;(function() {
+            const BASE = 'https://supabase.mobiweb.pt/rest/v1'
+            const KEY  = 'eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJyb2xlIjogImFub24iLCAiaXNzIjogInN1cGFiYXNlIiwgImlhdCI6IDE3NzY2OTA0OTYsICJleHAiOiAyMDkyMDUwNDk2fQ.umUlKtaceMo_mcUY9msIPqDRKQUPGypH-JJ3BHtAt94'
+            const HDRS = { 'apikey': KEY, 'Authorization': 'Bearer ' + KEY }
 
-            const { data, error } = await sb
-                .from('areas')
-                .select('name, image_url')
-                .eq('active', true)
-                .order('sort_order')
+            function sbFetch(table, params) {
+                return fetch(BASE + '/' + table + '?' + params, { headers: HDRS })
+                    .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status) })
+            }
 
-            if (error || !data || !data.length) return
+            // Services — store data so re-render works on language switch
+            sbFetch('services', 'active=eq.true&select=title,description,icon,contact_key,title_ar,description_ar&order=sort_order')
+                .then(function(data) {
+                    if (!data || !data.length) return
+                    _servicesData = data
+                    renderServicesGrid()
+                })
+                .catch(function(e) { console.error('[IMP] services:', e) })
 
-            const locationIcon = `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="rgba(196,168,96,0.8)"/>
-            </svg>`
+            // Areas
+            var aGrid = document.getElementById('areas-grid')
+            var locIcon = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="rgba(196,168,96,0.8)"/></svg>'
+            sbFetch('areas', 'active=eq.true&select=name,image_url&order=sort_order')
+                .then(function(data) {
+                    if (!data || !data.length) { aGrid.innerHTML = ''; return }
+                    aGrid.innerHTML = data.map(function(a) {
+                        var name = a.name.replace(/</g,'&lt;')
+                        if (a.image_url) {
+                            return '<div class="area-card"><img src="' + a.image_url + '" alt="' + name + '" loading="lazy"><div class="area-card-label">' + name + '</div></div>'
+                        }
+                        return '<div class="area-card"><div class="area-card-placeholder">' + locIcon + '<div class="area-card-label">' + name + '</div></div></div>'
+                    }).join('')
+                })
+                .catch(function(e) { console.error('[IMP] areas:', e); aGrid.innerHTML = '' })
 
-            grid.innerHTML = data.map(a => {
-                const name = a.name.replace(/</g,'&lt;')
-                if (a.image_url) {
-                    return `<div class="area-card">
-                        <img src="${a.image_url}" alt="${name}" loading="lazy">
-                        <div class="area-card-label">${name}</div>
-                    </div>`
-                }
-                return `<div class="area-card">
-                    <div class="area-card-placeholder">
-                        ${locationIcon}
-                        <div class="area-card-label">${name}</div>
-                    </div>
-                </div>`
-            }).join('')
+            // Packages
+            sbFetch('packages', 'select=title,title_ar,badge,features,features_ar,is_featured&order=sort_order')
+                .then(function(data) {
+                    if (!data || !data.length) return
+                    _packagesData = data
+                    renderPackagesGrid()
+                })
+                .catch(function(e) { console.error('[IMP] packages:', e) })
         })()
+
+        /* ─────────────────────────────────────────────────────────────
+           i18n — Internationalisation (EN / AR)
+           ─────────────────────────────────────────────────────────────
+           Attributes used in the HTML:
+             data-i18n="key"         → sets element.textContent
+             data-i18n-html="key"    → sets element.innerHTML  (use for content with embedded tags)
+             data-i18n-ph="key"      → sets element.placeholder
+
+           Public API:
+             setLanguage('ar')       → switch to Arabic (RTL)
+             setLanguage('en')       → switch to English (LTR)
+             t('key')                → returns current-language string (used in JS)
+        ───────────────────────────────────────────────────────────── */
+        var I18N = {
+          en: {
+            /* Navigation */
+            'nav.home':     'Home',
+            'nav.about':    'About',
+            'nav.services': 'Services',
+            'nav.areas':    'Areas',
+            'nav.packages': 'Packages',
+            'nav.contact':  'Contact',
+            'nav.cta':      'Get Free Quote',
+            /* Hero */
+            'hero.title':        "Dubai's Trusted Property Maintenance & Renovation Experts",
+            'hero.subtitle':     'Professional maintenance, painting, landscaping and renovation services for villas, apartments and commercial properties across Dubai.',
+            'hero.cta_quote':    'Get a Free Quote',
+            'hero.cta_services': 'Our Services',
+            'hero.stat1':        'Projects Completed',
+            'hero.stat2':        'Client Rating',
+            'hero.stat3':        'Support Available',
+            /* Services */
+            'services.title':      'Our Professional Services',
+            'services.learn_more': 'Learn More',
+            /* Why Choose Us */
+            'why.title': 'Why Choose IMP Douro',
+            'why.stat1': 'Projects Completed',
+            'why.stat2': 'Years Experience',
+            'why.stat3': 'Customer Support',
+            'why.stat4': 'Satisfaction Rate',
+            'why.feat1': 'Licensed & Certified Professionals',
+            'why.feat2': 'Fast Response Time',
+            'why.feat3': 'Transparent Pricing',
+            'why.feat4': 'Quality Materials Used',
+            'why.feat5': 'Residential & Commercial Services',
+            /* About */
+            'about.title': 'About IMP Douro',
+            'about.p1': "IMP Douro is Dubai's leading property maintenance and renovation company, dedicated to providing comprehensive solutions for residential and commercial properties. With over a decade of experience, we have successfully completed 100+ projects across Dubai.",
+            'about.p2': 'Our team of licensed and certified professionals is committed to delivering exceptional service quality, transparent pricing, and customer satisfaction. We specialize in a wide range of services including property maintenance, handyman work, painting, landscaping, and complete renovations.',
+            'about.p3': 'Whether you need regular maintenance, emergency repairs, or a complete property overhaul, IMP Douro is your trusted partner in Dubai.',
+            'about.qa': '<strong>Quality Assurance</strong> Premium materials and professional workmanship guaranteed on every project.',
+            'about.td': '<strong>Timely Delivery</strong> We respect your time and ensure projects are completed on schedule.',
+            'about.cs': '<strong>Customer Support</strong> 24/7 support available to address your concerns and queries.',
+            'about.lc': '<strong>Licensed &amp; Certified</strong> All our professionals are fully licensed and certified.',
+            /* Areas */
+            'areas.title': 'Areas We Serve in Dubai',
+            /* Packages */
+            'pkg.title':   'Villa Maintenance Packages',
+            'pkg.basic':   'Basic Package',
+            'pkg.basic1':  'AC Check & Filter Change',
+            'pkg.basic2':  'Basic Plumbing Inspection',
+            'pkg.basic3':  'Light Bulb & Fixture Check',
+            'pkg.basic4':  'Door Lock Inspection',
+            'pkg.std':     'Standard Package',
+            'pkg.popular': 'Most Popular',
+            'pkg.std1':    'AC Servicing & Filter Change',
+            'pkg.std2':    'Plumbing Inspection & Repairs',
+            'pkg.std3':    'Electrical System Inspection',
+            'pkg.std4':    'General Maintenance Works',
+            'pkg.std5':    'Preventive Checks',
+            'pkg.prem':    'Premium Package',
+            'pkg.prem1':   'Full AC Maintenance & Cleaning',
+            'pkg.prem2':   'Complete Plumbing Service',
+            'pkg.prem3':   'Electrical System Full Check',
+            'pkg.prem4':   'Garden & Landscaping Maintenance',
+            'pkg.prem5':   'All Repairs & Replacements',
+            'pkg.prem6':   'Priority Support',
+            'pkg.cta':     'Get Quote',
+            /* Contact */
+            'contact.title':      'Get in Touch With Us',
+            'contact.subtitle':   "Have questions? We'd love to hear from you. Get in touch with our team for a free quote or consultation.",
+            'contact.phone':      'Phone',
+            'contact.email':      'Email',
+            'contact.whatsapp':   'WhatsApp',
+            'contact.location':   'Location',
+            'contact.dubai':      'Dubai, UAE',
+            'contact.form_title': 'Send us a Message',
+            'contact.name':       'Full Name',
+            'contact.phone_lbl':  'Phone Number',
+            'contact.service':    'Service Needed',
+            'contact.svc_ph':     'Select a service',
+            'contact.svc_maint':  'Property Maintenance',
+            'contact.svc_hand':   'Handyman Services',
+            'contact.svc_paint':  'Painting Services',
+            'contact.svc_land':   'Landscaping & Garden Maintenance',
+            'contact.svc_reno':   'Renovations & Refurbishments',
+            'contact.svc_villa':  'Villa Maintenance',
+            'contact.prop':       'Property Type',
+            'contact.prop_ph':    'Select property type',
+            'contact.prop_villa': 'Villa',
+            'contact.prop_apt':   'Apartment',
+            'contact.prop_off':   'Office',
+            'contact.prop_comm':  'Commercial Space',
+            'contact.prop_other': 'Other',
+            'contact.message':    'Message',
+            'contact.msg_ph':     'Tell us about your project...',
+            'contact.submit':     'Send Message',
+            /* Form feedback */
+            'form.sending':   'Sending...',
+            'form.required':  'Please fill in all required fields.',
+            'form.phone_err': 'Please enter a valid phone number.',
+            'form.success':   "Thank you! We'll contact you soon.",
+            'form.error':     'An error occurred. Please try again or call us directly.',
+            /* Footer */
+            'footer.tagline':   "Dubai's trusted property maintenance and renovation experts. Professional services for residential and commercial properties.",
+            'footer.services':  'Services',
+            'footer.svc_maint': 'Property Maintenance',
+            'footer.svc_hand':  'Handyman Services',
+            'footer.svc_paint': 'Painting Services',
+            'footer.svc_land':  'Landscaping',
+            'footer.svc_reno':  'Renovations',
+            'footer.svc_villa': 'Villa Maintenance',
+            'footer.contact':   'Contact Info',
+            'footer.whatsapp':  'WhatsApp Chat',
+            'footer.powered':   'Powered by',
+            'footer.copyright':      '© 2026 IMP Douro. All rights reserved.',
+            'footer.privacy':        'Privacy Policy',
+            'form.privacy_required': 'Please accept the Privacy Policy to proceed.',
+            'form.privacy_label':    'I have read and agree to the',
+            'form.privacy_link':     'Privacy Policy',
+            /* WhatsApp */
+            'wa.tooltip': 'Chat with us'
+          },
+          ar: {
+            /* Navigation */
+            'nav.home':     'الرئيسية',
+            'nav.about':    'من نحن',
+            'nav.services': 'خدماتنا',
+            'nav.areas':    'مناطق الخدمة',
+            'nav.packages': 'الباقات',
+            'nav.contact':  'تواصل معنا',
+            'nav.cta':      'احصل على عرض مجاني',
+            /* Hero */
+            'hero.title':        'خبراء الصيانة والتجديد العقاري الموثوقون في دبي',
+            'hero.subtitle':     'خدمات احترافية في الصيانة والدهان والتنسيق وأعمال التجديد للفلل والشقق والمباني التجارية في جميع أنحاء دبي.',
+            'hero.cta_quote':    'احصل على عرض مجاني',
+            'hero.cta_services': 'خدماتنا',
+            'hero.stat1':        'مشروع مكتمل',
+            'hero.stat2':        'تقييم العملاء',
+            'hero.stat3':        'دعم متواصل',
+            /* Services */
+            'services.title':      'خدماتنا الاحترافية',
+            'services.learn_more': 'اعرف المزيد',
+            /* Why Choose Us */
+            'why.title': 'لماذا تختار IMP Douro؟',
+            'why.stat1': 'مشروع مكتمل',
+            'why.stat2': 'سنوات من الخبرة',
+            'why.stat3': 'دعم العملاء',
+            'why.stat4': 'نسبة الرضا',
+            'why.feat1': 'محترفون مرخصون ومعتمدون',
+            'why.feat2': 'وقت استجابة سريع',
+            'why.feat3': 'أسعار شفافة',
+            'why.feat4': 'مواد ذات جودة عالية',
+            'why.feat5': 'خدمات سكنية وتجارية',
+            /* About */
+            'about.title': 'عن IMP Douro',
+            'about.p1': 'IMP Douro هي الشركة الرائدة في صيانة وتجديد العقارات في دبي، متخصصة في تقديم حلول شاملة للعقارات السكنية والتجارية. بخبرة تمتد لأكثر من عقد، أنجزنا بنجاح أكثر من 100+ مشروع في جميع أنحاء دبي.',
+            'about.p2': 'يلتزم فريقنا من المحترفين المرخصين والمعتمدين بتقديم خدمة استثنائية بأسعار شفافة وبما يضمن رضا العملاء الكامل. نتخصص في مجموعة واسعة من الخدمات تشمل الصيانة العقارية وأعمال الحرفيين والدهان والتنسيق والتجديد الشامل.',
+            'about.p3': 'سواء كنت تحتاج إلى صيانة دورية أو إصلاحات طارئة أو تجديد شامل للعقار، فإن IMP Douro هي شريكك الموثوق في دبي.',
+            'about.qa': '<strong>ضمان الجودة</strong> مواد ممتازة وحرفية احترافية مضمونة في كل مشروع.',
+            'about.td': '<strong>الالتزام بالمواعيد</strong> نحترم وقتك ونحرص على إنجاز المشاريع في المواعيد المحددة.',
+            'about.cs': '<strong>دعم العملاء</strong> دعم متواصل على مدار الساعة للإجابة على استفساراتك وطلباتك.',
+            'about.lc': '<strong>مرخص ومعتمد</strong> جميع محترفينا حاملون لتراخيص ومؤهلات معتمدة.',
+            /* Areas */
+            'areas.title': 'المناطق التي نخدمها في دبي',
+            /* Packages */
+            'pkg.title':   'باقات صيانة الفلل',
+            'pkg.basic':   'الباقة الأساسية',
+            'pkg.basic1':  'فحص المكيف وتغيير الفلتر',
+            'pkg.basic2':  'فحص السباكة الأساسي',
+            'pkg.basic3':  'فحص المصابيح والتجهيزات',
+            'pkg.basic4':  'فحص أقفال الأبواب',
+            'pkg.std':     'الباقة القياسية',
+            'pkg.popular': 'الأكثر طلباً',
+            'pkg.std1':    'خدمة المكيف وتغيير الفلتر',
+            'pkg.std2':    'فحص وإصلاح السباكة',
+            'pkg.std3':    'فحص النظام الكهربائي',
+            'pkg.std4':    'أعمال الصيانة العامة',
+            'pkg.std5':    'الفحوصات الوقائية',
+            'pkg.prem':    'الباقة المميزة',
+            'pkg.prem1':   'صيانة وتنظيف المكيف الكامل',
+            'pkg.prem2':   'خدمة السباكة الشاملة',
+            'pkg.prem3':   'الفحص الكامل للنظام الكهربائي',
+            'pkg.prem4':   'صيانة الحديقة والتنسيق',
+            'pkg.prem5':   'جميع الإصلاحات والاستبدالات',
+            'pkg.prem6':   'دعم ذو أولوية',
+            'pkg.cta':     'احصل على عرض',
+            /* Contact */
+            'contact.title':      'تواصل معنا',
+            'contact.subtitle':   'هل لديك أسئلة؟ يسعدنا سماعك. تواصل مع فريقنا للحصول على عرض مجاني أو استشارة.',
+            'contact.phone':      'الهاتف',
+            'contact.email':      'البريد الإلكتروني',
+            'contact.whatsapp':   'واتساب',
+            'contact.location':   'الموقع',
+            'contact.dubai':      'دبي، الإمارات العربية المتحدة',
+            'contact.form_title': 'أرسل لنا رسالة',
+            'contact.name':       'الاسم الكامل',
+            'contact.phone_lbl':  'رقم الهاتف',
+            'contact.service':    'الخدمة المطلوبة',
+            'contact.svc_ph':     'اختر الخدمة',
+            'contact.svc_maint':  'صيانة عقارية',
+            'contact.svc_hand':   'خدمات حرفية',
+            'contact.svc_paint':  'خدمات الدهان',
+            'contact.svc_land':   'تنسيق الحدائق وصيانتها',
+            'contact.svc_reno':   'التجديدات والإصلاحات',
+            'contact.svc_villa':  'صيانة الفلل',
+            'contact.prop':       'نوع العقار',
+            'contact.prop_ph':    'اختر نوع العقار',
+            'contact.prop_villa': 'فيلا',
+            'contact.prop_apt':   'شقة',
+            'contact.prop_off':   'مكتب',
+            'contact.prop_comm':  'مساحة تجارية',
+            'contact.prop_other': 'أخرى',
+            'contact.message':    'الرسالة',
+            'contact.msg_ph':     'أخبرنا عن مشروعك...',
+            'contact.submit':     'إرسال الرسالة',
+            /* Form feedback */
+            'form.sending':   'جارٍ الإرسال...',
+            'form.required':  'يرجى ملء جميع الحقول المطلوبة.',
+            'form.phone_err': 'يرجى إدخال رقم هاتف صحيح.',
+            'form.success':   'شكراً! سنتواصل معك قريباً.',
+            'form.error':     'حدث خطأ. يرجى المحاولة مرة أخرى أو الاتصال بنا مباشرة.',
+            /* Footer */
+            'footer.tagline':   'خبراء الصيانة والتجديد العقاري الموثوقون في دبي. خدمات احترافية للعقارات السكنية والتجارية.',
+            'footer.services':  'الخدمات',
+            'footer.svc_maint': 'صيانة عقارية',
+            'footer.svc_hand':  'خدمات حرفية',
+            'footer.svc_paint': 'خدمات الدهان',
+            'footer.svc_land':  'تنسيق الحدائق',
+            'footer.svc_reno':  'التجديدات',
+            'footer.svc_villa': 'صيانة الفلل',
+            'footer.contact':   'معلومات التواصل',
+            'footer.whatsapp':  'محادثة واتساب',
+            'footer.powered':   'مدعوم من',
+            'footer.copyright':      '© 2026 IMP Douro. جميع الحقوق محفوظة.',
+            'footer.privacy':        'سياسة الخصوصية',
+            'form.privacy_required': 'يرجى قبول سياسة الخصوصية للمتابعة.',
+            'form.privacy_label':    'لقد قرأت وأوافق على',
+            'form.privacy_link':     'سياسة الخصوصية',
+            /* WhatsApp */
+            'wa.tooltip': 'تواصل معنا'
+          }
+        };
+
+        /* Active language — persisted in localStorage */
+        var _lang = localStorage.getItem('imp-lang') || 'en';
+        /* Cached services data for language-aware re-render */
+        var _servicesData = null;
+        var _packagesData = null;
+
+        /* Returns the translation string for the current language */
+        function t(key) {
+          return (I18N[_lang] && I18N[_lang][key]) || I18N.en[key] || key;
+        }
+
+        /* Re-renders service cards using cached data + current language */
+        function renderServicesGrid() {
+          if (!_servicesData) return;
+          var useAr = _lang === 'ar';
+          var grid = document.getElementById('services-grid');
+          grid.innerHTML = _servicesData.map(function(s, i) {
+            var title = useAr && s.title_ar       ? s.title_ar       : s.title;
+            var desc  = useAr && s.description_ar ? s.description_ar : s.description;
+            return '<div class="service-card" data-aos="fade-up" data-aos-delay="' + (i * 100) + '">' +
+              '<div class="service-icon"><i class="fas ' + s.icon + '"></i></div>' +
+              '<h3>' + title.replace(/</g,'&lt;') + '</h3>' +
+              '<p>'  + desc.replace(/</g,'&lt;')  + '</p>' +
+              '<a href="javascript:void(0)" onclick="scrollToContactWithService(\'' + s.contact_key.replace(/'/g,"\\'") + '\')" class="learn-more"><span data-i18n="services.learn_more">Learn More</span> <i class="fas fa-arrow-right"></i></a>' +
+              '</div>';
+          }).join('');
+          var footerList = document.getElementById('footer-services-list');
+          if (footerList) {
+            footerList.innerHTML = _servicesData.map(function(s) {
+              var title = useAr && s.title_ar ? s.title_ar : s.title;
+              return '<li><a href="#services">' + title.replace(/</g,'&lt;') + '</a></li>';
+            }).join('');
+          }
+          applyI18n();
+        }
+
+        /* Re-renders package cards using cached data + current language */
+        function renderPackagesGrid() {
+          if (!_packagesData) return;
+          var useAr = _lang === 'ar';
+          var grid = document.getElementById('packages-grid');
+          if (!grid) return;
+          grid.innerHTML = _packagesData.map(function(p, i) {
+            var title    = useAr && p.title_ar    ? p.title_ar    : p.title;
+            var features = useAr && p.features_ar && p.features_ar.length ? p.features_ar : (p.features || []);
+            var badgeTxt = p.badge ? (useAr ? t('pkg.popular') : p.badge) : '';
+            var ctaTxt   = t('pkg.cta');
+            var featuredClass = p.is_featured ? ' featured' : '';
+            var delay = i * 100;
+            return '<div class="package-card' + featuredClass + '" data-aos="fade-up" data-aos-delay="' + delay + '">' +
+              (p.is_featured && badgeTxt ? '<div class="featured-badge">' + esc(badgeTxt) + '</div>' : '') +
+              '<h3>' + esc(title) + '</h3>' +
+              '<ul>' +
+              features.map(function(f) {
+                return '<li><i class="fas fa-check"></i> ' + esc(f) + '</li>';
+              }).join('') +
+              '</ul>' +
+              '<button class="package-button" onclick="scrollToSection(\'contact\')">' + esc(ctaTxt) + '</button>' +
+              '</div>';
+          }).join('');
+        }
+
+        function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+
+        /* Applies all [data-i18n*] attributes to the DOM */
+        function applyI18n() {
+          var d = I18N[_lang];
+          document.querySelectorAll('[data-i18n]').forEach(function(el) {
+            if (d[el.dataset.i18n] !== undefined) el.textContent = d[el.dataset.i18n];
+          });
+          document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+            if (d[el.dataset.i18nHtml] !== undefined) el.innerHTML = d[el.dataset.i18nHtml];
+          });
+          document.querySelectorAll('[data-i18n-ph]').forEach(function(el) {
+            if (d[el.dataset.i18nPh] !== undefined) el.placeholder = d[el.dataset.i18nPh];
+          });
+          var lbl = document.getElementById('privacyConsentLabel');
+          if (lbl) lbl.innerHTML = d['form.privacy_label'] + ' <a href="/privacy.html" target="_blank">' + d['form.privacy_link'] + '</a>';
+        }
+
+        /* Switches language, updates <html> dir/lang, and re-renders all strings */
+        function setLanguage(lang) {
+          _lang = lang;
+          localStorage.setItem('imp-lang', lang);
+          var html = document.documentElement;
+          html.lang = lang;
+          html.dir  = lang === 'ar' ? 'rtl' : 'ltr';
+          renderServicesGrid(); // re-renders cards with correct language text
+          renderPackagesGrid();
+          applyI18n();
+          var btn = document.getElementById('langToggle');
+          if (btn) {
+            btn.textContent = lang === 'ar' ? 'EN' : 'عربي';
+            btn.onclick = function() { setLanguage(lang === 'ar' ? 'en' : 'ar'); };
+          }
+        }
+
+        /* Init: apply saved or default language on first load */
+        setLanguage(_lang);
+
     </script>
 </body>
 </html>

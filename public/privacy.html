@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — IMP Douro</title>
+    <meta name="description" content="Privacy Policy for IMP Douro – Dubai property maintenance services. How we collect, use and protect your personal data.">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180x180.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #1A1A1A;
+            --card-bg: #242424;
+            --gold-accent: #C9A96E;
+            --gold-light: #E8C98A;
+            --text-primary: #F5F0E8;
+            --text-secondary: #A8A39A;
+            --border-color: #333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+        }
+
+        [dir="rtl"] body,
+        [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3,
+        [dir="rtl"] p, [dir="rtl"] li, [dir="rtl"] a {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        /* ── Header ── */
+        header {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .header-logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .header-logo span {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gold-accent);
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .header-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .header-nav a:hover { color: var(--gold-accent); }
+
+        .lang-toggle {
+            background: transparent;
+            border: 1px solid var(--gold-accent);
+            color: var(--gold-accent);
+            padding: 0.35rem 0.9rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-family: inherit;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .lang-toggle:hover {
+            background: var(--gold-accent);
+            color: var(--dark-bg);
+        }
+
+        /* ── Hero ── */
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border-bottom: 1px solid var(--border-color);
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            color: var(--gold-accent);
+            margin-bottom: 0.75rem;
+        }
+
+        [dir="rtl"] .hero h1 { font-family: 'Cairo', sans-serif; }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* ── Main content ── */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 2rem 5rem;
+        }
+
+        .section {
+            margin-bottom: 2.5rem;
+        }
+
+        .section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: var(--gold-accent);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        [dir="rtl"] .section h2 { font-family: 'Cairo', sans-serif; }
+
+        .section p { color: var(--text-secondary); margin-bottom: 0.75rem; }
+        .section p:last-child { margin-bottom: 0; }
+
+        .section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .section ul li {
+            color: var(--text-secondary);
+            padding: 0.35rem 0;
+            padding-left: 1.25rem;
+            position: relative;
+        }
+
+        .section ul li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--gold-accent);
+        }
+
+        [dir="rtl"] .section ul li {
+            padding-left: 0;
+            padding-right: 1.25rem;
+        }
+
+        [dir="rtl"] .section ul li::before {
+            left: auto;
+            right: 0;
+        }
+
+        .section a { color: var(--gold-accent); text-decoration: none; }
+        .section a:hover { text-decoration: underline; }
+
+        .rights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .right-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+        }
+
+        .right-card strong {
+            display: block;
+            color: var(--gold-accent);
+            font-size: 0.9rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .right-card p {
+            font-size: 0.85rem;
+            margin: 0 !important;
+        }
+
+        .info-box {
+            background: var(--card-bg);
+            border-left: 3px solid var(--gold-accent);
+            border-radius: 0 8px 8px 0;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        [dir="rtl"] .info-box {
+            border-left: none;
+            border-right: 3px solid var(--gold-accent);
+            border-radius: 8px 0 0 8px;
+        }
+
+        .info-box p { margin: 0; }
+
+        .effective-date {
+            display: inline-block;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* ── Footer ── */
+        footer {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        footer a { color: var(--gold-accent); text-decoration: none; }
+
+        @media (max-width: 600px) {
+            header { flex-wrap: wrap; gap: 1rem; }
+            .rights-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="/" class="header-logo">
+            <img src="/logo.png" alt="IMP Douro Logo">
+            <span>IMP Douro</span>
+        </a>
+        <div class="header-nav">
+            <a href="/" id="backLink">← Back to Website</a>
+            <button class="lang-toggle" id="langToggle">عربي</button>
+        </div>
+    </header>
+
+    <div class="hero">
+        <h1 id="hero-title">Privacy Policy</h1>
+        <p id="hero-sub">How we collect, use, and protect your personal data</p>
+    </div>
+
+    <main>
+        <span class="effective-date" id="eff-date">Effective Date: April 20, 2026</span>
+
+        <!-- 1. About Us -->
+        <div class="section">
+            <h2 id="s1-title">1. About Us &amp; Contact</h2>
+            <div class="info-box">
+                <p id="s1-body">
+                    <strong>IMP Douro</strong><br>
+                    Dubai Property Maintenance &amp; Renovation Services<br>
+                    Dubai, United Arab Emirates<br>
+                    Email: <a href="mailto:douroimp@gmail.com">douroimp@gmail.com</a><br>
+                    Phone: <a href="tel:+971564641047">+971 56 464 1047</a>
+                </p>
+            </div>
+            <p id="s1-extra">For any questions about this Privacy Policy or how we handle your personal data, please contact us at the email or phone number above.</p>
+        </div>
+
+        <!-- 2. Data We Collect -->
+        <div class="section">
+            <h2 id="s2-title">2. What Data We Collect</h2>
+            <p id="s2-intro">When you submit the contact form on our website, we collect:</p>
+            <ul id="s2-list">
+                <li>Your full name</li>
+                <li>Your email address</li>
+                <li>Your phone number</li>
+                <li>Type of service you are interested in</li>
+                <li>Your message or inquiry</li>
+            </ul>
+            <p id="s2-extra" style="margin-top:0.75rem;">We also store your language preference (English or Arabic) in your browser's local storage. This is a purely technical setting that never leaves your device and does not identify you.</p>
+        </div>
+
+        <!-- 3. Purpose -->
+        <div class="section">
+            <h2 id="s3-title">3. Why We Collect Your Data</h2>
+            <p id="s3-intro">We use your information exclusively to:</p>
+            <ul id="s3-list">
+                <li>Respond to your service inquiry promptly</li>
+                <li>Contact you regarding property maintenance or renovation services</li>
+                <li>Maintain records of customer communications for business purposes</li>
+                <li>Improve our services and customer experience</li>
+            </ul>
+            <p id="s3-extra" style="margin-top:0.75rem;">We do not use your data for profiling, automated decision-making, or targeted advertising.</p>
+        </div>
+
+        <!-- 4. Legal Basis -->
+        <div class="section">
+            <h2 id="s4-title">4. Legal Basis for Processing</h2>
+            <ul id="s4-list">
+                <li><strong>Consent</strong> — by submitting the contact form you consent to us processing your data to respond to your inquiry.</li>
+                <li><strong>Legitimate Interest</strong> — we have a legitimate business interest in managing customer inquiries and maintaining operational records.</li>
+                <li><strong>Legal Obligation</strong> — we may retain certain records as required by UAE commercial and tax regulations.</li>
+            </ul>
+        </div>
+
+        <!-- 5. Sharing -->
+        <div class="section">
+            <h2 id="s5-title">5. Who We Share Your Data With</h2>
+            <p id="s5-body">We do not sell, rent, or trade your personal data. We may share it only in the following limited circumstances:</p>
+            <ul id="s5-list">
+                <li>With email service providers used solely to deliver our response to you.</li>
+                <li>When legally required by UAE authorities or courts.</li>
+                <li>With your explicit consent for any other purpose.</li>
+            </ul>
+        </div>
+
+        <!-- 6. Retention -->
+        <div class="section">
+            <h2 id="s6-title">6. How Long We Keep Your Data</h2>
+            <p id="s6-body">We retain contact form data for up to <strong>3 years</strong> for business record-keeping and follow-up purposes. After this period, data is securely deleted. Your language preference is stored only in your browser and is never transmitted to our servers.</p>
+        </div>
+
+        <!-- 7. Rights -->
+        <div class="section">
+            <h2 id="s7-title">7. Your Privacy Rights</h2>
+            <p id="s7-intro">Under the <strong>UAE Federal Decree-Law No. 45 of 2021 on Personal Data Protection (PDPL)</strong>, you have the following rights:</p>
+            <div class="rights-grid">
+                <div class="right-card">
+                    <strong id="r1-title">Right to Access</strong>
+                    <p id="r1-body">Request a copy of the personal data we hold about you.</p>
+                </div>
+                <div class="right-card">
+                    <strong id="r2-title">Right to Rectification</strong>
+                    <p id="r2-body">Ask us to correct any inaccurate information.</p>
+                </div>
+                <div class="right-card">
+                    <strong id="r3-title">Right to Erasure</strong>
+                    <p id="r3-body">Request deletion of your personal data, subject to legal retention obligations.</p>
+                </div>
+                <div class="right-card">
+                    <strong id="r4-title">Right to Restrict Processing</strong>
+                    <p id="r4-body">Ask us to limit how we use your data.</p>
+                </div>
+                <div class="right-card">
+                    <strong id="r5-title">Right to Data Portability</strong>
+                    <p id="r5-body">Receive your data in a structured, machine-readable format.</p>
+                </div>
+                <div class="right-card">
+                    <strong id="r6-title">Right to Object</strong>
+                    <p id="r6-body">Object to the processing of your data, including for marketing.</p>
+                </div>
+                <div class="right-card">
+                    <strong id="r7-title">Right to Withdraw Consent</strong>
+                    <p id="r7-body">Withdraw consent at any time, without penalty.</p>
+                </div>
+                <div class="right-card">
+                    <strong id="r8-title">How to Exercise Your Rights</strong>
+                    <p id="r8-body">Email us at <a href="mailto:douroimp@gmail.com">douroimp@gmail.com</a>. We will respond within 30 days.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. Security -->
+        <div class="section">
+            <h2 id="s8-title">8. Data Security</h2>
+            <p id="s8-body">We apply reasonable technical and organisational measures to protect your data, including encrypted data transmission and restricted access to customer records. If you believe your data has been compromised, please contact us immediately.</p>
+        </div>
+
+        <!-- 9. Children -->
+        <div class="section">
+            <h2 id="s9-title">9. Children's Privacy</h2>
+            <p id="s9-body">Our services are not directed at children under 13. We do not knowingly collect personal data from minors. If we become aware that a child has submitted data, we will delete it promptly.</p>
+        </div>
+
+        <!-- 10. Changes -->
+        <div class="section">
+            <h2 id="s10-title">10. Changes to This Policy</h2>
+            <p id="s10-body">We may update this policy from time to time. Significant changes will be posted on this page with a new effective date. Continued use of our website after changes constitutes acceptance of the updated policy.</p>
+        </div>
+
+        <!-- 11. Governing Law -->
+        <div class="section">
+            <h2 id="s11-title">11. Governing Law</h2>
+            <p id="s11-body">This Privacy Policy is governed by the laws of the United Arab Emirates, in particular the Federal Decree-Law No. 45 of 2021 on Personal Data Protection.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p id="footer-text">&copy; 2026 IMP Douro. All rights reserved. &nbsp;|&nbsp; <a href="/">Back to Website</a></p>
+    </footer>
+
+    <script>
+    var CONTENT = {
+        en: {
+            pageTitle:   'Privacy Policy — IMP Douro',
+            heroTitle:   'Privacy Policy',
+            heroSub:     'How we collect, use, and protect your personal data',
+            effDate:     'Effective Date: April 20, 2026',
+            backLink:    '← Back to Website',
+            s1Title:     '1. About Us &amp; Contact',
+            s1Body:      '<strong>IMP Douro</strong><br>Dubai Property Maintenance &amp; Renovation Services<br>Dubai, United Arab Emirates<br>Email: <a href="mailto:douroimp@gmail.com">douroimp@gmail.com</a><br>Phone: <a href="tel:+971564641047">+971 56 464 1047</a>',
+            s1Extra:     'For any questions about this Privacy Policy or how we handle your personal data, please contact us at the email or phone number above.',
+            s2Title:     '2. What Data We Collect',
+            s2Intro:     'When you submit the contact form on our website, we collect:',
+            s2List:      ['Your full name', 'Your email address', 'Your phone number', 'Type of service you are interested in', 'Your message or inquiry'],
+            s2Extra:     "We also store your language preference (English or Arabic) in your browser's local storage. This is a purely technical setting that never leaves your device and does not identify you.",
+            s3Title:     '3. Why We Collect Your Data',
+            s3Intro:     'We use your information exclusively to:',
+            s3List:      ['Respond to your service inquiry promptly', 'Contact you regarding property maintenance or renovation services', 'Maintain records of customer communications for business purposes', 'Improve our services and customer experience'],
+            s3Extra:     'We do not use your data for profiling, automated decision-making, or targeted advertising.',
+            s4Title:     '4. Legal Basis for Processing',
+            s4List:      ['<strong>Consent</strong> — by submitting the contact form you consent to us processing your data to respond to your inquiry.', '<strong>Legitimate Interest</strong> — we have a legitimate business interest in managing customer inquiries and maintaining operational records.', '<strong>Legal Obligation</strong> — we may retain certain records as required by UAE commercial and tax regulations.'],
+            s5Title:     '5. Who We Share Your Data With',
+            s5Body:      'We do not sell, rent, or trade your personal data. We may share it only in the following limited circumstances:',
+            s5List:      ['With email service providers used solely to deliver our response to you.', 'When legally required by UAE authorities or courts.', 'With your explicit consent for any other purpose.'],
+            s6Title:     '6. How Long We Keep Your Data',
+            s6Body:      'We retain contact form data for up to <strong>3 years</strong> for business record-keeping and follow-up purposes. After this period, data is securely deleted. Your language preference is stored only in your browser and is never transmitted to our servers.',
+            s7Title:     '7. Your Privacy Rights',
+            s7Intro:     'Under the <strong>UAE Federal Decree-Law No. 45 of 2021 on Personal Data Protection (PDPL)</strong>, you have the following rights:',
+            r1Title:     'Right to Access', r1Body: 'Request a copy of the personal data we hold about you.',
+            r2Title:     'Right to Rectification', r2Body: 'Ask us to correct any inaccurate information.',
+            r3Title:     'Right to Erasure', r3Body: 'Request deletion of your personal data, subject to legal retention obligations.',
+            r4Title:     'Right to Restrict Processing', r4Body: 'Ask us to limit how we use your data.',
+            r5Title:     'Right to Data Portability', r5Body: 'Receive your data in a structured, machine-readable format.',
+            r6Title:     'Right to Object', r6Body: 'Object to the processing of your data, including for marketing.',
+            r7Title:     'Right to Withdraw Consent', r7Body: 'Withdraw consent at any time, without penalty.',
+            r8Title:     'How to Exercise Your Rights', r8Body: 'Email us at <a href="mailto:douroimp@gmail.com">douroimp@gmail.com</a>. We will respond within 30 days.',
+            s8Title:     '8. Data Security',
+            s8Body:      'We apply reasonable technical and organisational measures to protect your data, including encrypted data transmission and restricted access to customer records. If you believe your data has been compromised, please contact us immediately.',
+            s9Title:     "9. Children's Privacy",
+            s9Body:      'Our services are not directed at children under 13. We do not knowingly collect personal data from minors. If we become aware that a child has submitted data, we will delete it promptly.',
+            s10Title:    '10. Changes to This Policy',
+            s10Body:     'We may update this policy from time to time. Significant changes will be posted on this page with a new effective date. Continued use of our website after changes constitutes acceptance of the updated policy.',
+            s11Title:    '11. Governing Law',
+            s11Body:     'This Privacy Policy is governed by the laws of the United Arab Emirates, in particular the Federal Decree-Law No. 45 of 2021 on Personal Data Protection.',
+            footerText:  '&copy; 2026 IMP Douro. All rights reserved. &nbsp;|&nbsp; <a href="/">Back to Website</a>',
+            langBtn:     'عربي'
+        },
+        ar: {
+            pageTitle:   'سياسة الخصوصية — IMP Douro',
+            heroTitle:   'سياسة الخصوصية',
+            heroSub:     'كيف نجمع بياناتك الشخصية ونستخدمها ونحميها',
+            effDate:     'تاريخ السريان: ٢٠ أبريل ٢٠٢٥',
+            backLink:    '→ العودة إلى الموقع',
+            s1Title:     '١. معلومات عنا وبيانات التواصل',
+            s1Body:      '<strong>IMP Douro</strong><br>خدمات صيانة وتجديد العقارات في دبي<br>دبي، الإمارات العربية المتحدة<br>البريد الإلكتروني: <a href="mailto:douroimp@gmail.com">douroimp@gmail.com</a><br>الهاتف: <a href="tel:+971564641047">971 56 464 1047+</a>',
+            s1Extra:     'لأي استفسارات حول سياسة الخصوصية هذه أو طريقة معالجة بياناتك الشخصية، يرجى التواصل معنا عبر البريد الإلكتروني أو الهاتف أعلاه.',
+            s2Title:     '٢. البيانات التي نجمعها',
+            s2Intro:     'عند إرسال نموذج التواصل على موقعنا، نجمع:',
+            s2List:      ['اسمك الكامل', 'عنوان بريدك الإلكتروني', 'رقم هاتفك', 'نوع الخدمة التي تهتم بها', 'رسالتك أو استفسارك'],
+            s2Extra:     'نخزّن أيضاً تفضيل اللغة (الإنجليزية أو العربية) في التخزين المحلي لمتصفحك. هذا إعداد تقني بحت لا يغادر جهازك ولا يُحدد هويتك.',
+            s3Title:     '٣. لماذا نجمع بياناتك',
+            s3Intro:     'نستخدم معلوماتك حصرياً من أجل:',
+            s3List:      ['الرد على استفسارك بسرعة', 'التواصل معك بشأن خدمات الصيانة أو التجديد العقاري', 'الاحتفاظ بسجلات مراسلات العملاء لأغراض تجارية', 'تحسين خدماتنا وتجربة العملاء'],
+            s3Extra:     'لا نستخدم بياناتك لإنشاء ملفات تعريفية أو اتخاذ قرارات آلية أو توجيه إعلانات مستهدفة.',
+            s4Title:     '٤. الأساس القانوني للمعالجة',
+            s4List:      ['<strong>الموافقة</strong> — بإرسال نموذج التواصل، توافق على معالجة بياناتك للرد على استفسارك.', '<strong>المصلحة المشروعة</strong> — لدينا مصلحة تجارية مشروعة في إدارة استفسارات العملاء والاحتفاظ بالسجلات التشغيلية.', '<strong>الالتزام القانوني</strong> — قد نحتفظ ببعض السجلات وفقاً لما تتطلبه أنظمة الأعمال والضرائب الإماراتية.'],
+            s5Title:     '٥. مع من نشارك بياناتك',
+            s5Body:      'لا نبيع بياناتك الشخصية ولا نؤجّرها ولا نتاجر بها. قد نشاركها فقط في الحالات المحدودة التالية:',
+            s5List:      ['مع مزودي خدمة البريد الإلكتروني المستخدمين حصرياً لإرسال ردودنا إليك.', 'عند الاقتضاء القانوني من قِبل السلطات أو المحاكم الإماراتية.', 'بموافقتك الصريحة لأي غرض آخر.'],
+            s6Title:     '٦. مدة الاحتفاظ ببياناتك',
+            s6Body:      'نحتفظ ببيانات نموذج التواصل لمدة تصل إلى <strong>٣ سنوات</strong> لأغراض الحفظ التجاري والمتابعة. بعد هذه المدة، تُحذف البيانات بشكل آمن. تفضيل اللغة مخزّن فقط في متصفحك ولا يُرسَل إلى خوادمنا.',
+            s7Title:     '٧. حقوقك في مجال الخصوصية',
+            s7Intro:     'بموجب <strong>المرسوم بقانون اتحادي رقم (٤٥) لسنة ٢٠٢١ بشأن حماية البيانات الشخصية (PDPL)</strong> في دولة الإمارات، تتمتع بالحقوق التالية:',
+            r1Title:     'حق الوصول', r1Body: 'طلب نسخة من البيانات الشخصية التي نحتفظ بها عنك.',
+            r2Title:     'حق التصحيح', r2Body: 'طلب تصحيح أي معلومات غير دقيقة.',
+            r3Title:     'حق الحذف', r3Body: 'طلب حذف بياناتك الشخصية مع مراعاة التزامات الاحتفاظ القانونية.',
+            r4Title:     'حق تقييد المعالجة', r4Body: 'طلب تقييد طريقة استخدامنا لبياناتك.',
+            r5Title:     'حق نقل البيانات', r5Body: 'الحصول على بياناتك بصيغة منظمة وقابلة للقراءة آلياً.',
+            r6Title:     'حق الاعتراض', r6Body: 'الاعتراض على معالجة بياناتك بما في ذلك لأغراض التسويق.',
+            r7Title:     'حق سحب الموافقة', r7Body: 'سحب موافقتك في أي وقت دون أي عواقب.',
+            r8Title:     'كيفية ممارسة حقوقك', r8Body: 'راسلنا على <a href="mailto:douroimp@gmail.com">douroimp@gmail.com</a>. سنرد خلال ٣٠ يوماً.',
+            s8Title:     '٨. أمن البيانات',
+            s8Body:      'نطبّق تدابير تقنية وتنظيمية معقولة لحماية بياناتك، تشمل تشفير نقل البيانات والوصول المقيّد لسجلات العملاء. إذا كنت تعتقد أن بياناتك قد تعرضت للاختراق، يرجى التواصل معنا فوراً.',
+            s9Title:     '٩. خصوصية الأطفال',
+            s9Body:      'خدماتنا غير موجهة للأطفال دون سن ١٣. لا نجمع عمداً بيانات شخصية من القاصرين. إذا علمنا أن طفلاً قد أرسل بياناته، سنحذفها فوراً.',
+            s10Title:    '١٠. التغييرات على هذه السياسة',
+            s10Body:     'قد نحدّث هذه السياسة من وقت لآخر. ستُنشر التغييرات الجوهرية على هذه الصفحة بتاريخ سريان جديد. مواصلة استخدام موقعنا بعد التغييرات يعني قبولك للسياسة المحدثة.',
+            s11Title:    '١١. القانون الحاكم',
+            s11Body:     'تخضع سياسة الخصوصية هذه لقوانين دولة الإمارات العربية المتحدة، ولا سيما المرسوم بقانون اتحادي رقم (٤٥) لسنة ٢٠٢١ بشأن حماية البيانات الشخصية.',
+            footerText:  '&copy; 2026 IMP Douro. جميع الحقوق محفوظة. &nbsp;|&nbsp; <a href="/">العودة إلى الموقع</a>',
+            langBtn:     'EN'
+        }
+    };
+
+    var _lang = localStorage.getItem('imp-lang') || 'en';
+
+    function setHTML(id, html) {
+        var el = document.getElementById(id);
+        if (el) el.innerHTML = html;
+    }
+
+    function setText(id, text) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = text;
+    }
+
+    function setList(id, items) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.innerHTML = items.map(function(item) {
+            return '<li>' + item + '</li>';
+        }).join('');
+    }
+
+    function applyLanguage(lang) {
+        var c = CONTENT[lang];
+        var html = document.documentElement;
+        html.lang = lang;
+        html.dir  = lang === 'ar' ? 'rtl' : 'ltr';
+        document.title = c.pageTitle;
+
+        setText('hero-title',  c.heroTitle);
+        setText('hero-sub',    c.heroSub);
+        setText('eff-date',    c.effDate);
+        setHTML('backLink',    c.backLink);
+
+        setHTML('s1-title',    c.s1Title);
+        setHTML('s1-body',     c.s1Body);
+        setText('s1-extra',    c.s1Extra);
+
+        setHTML('s2-title',    c.s2Title);
+        setText('s2-intro',    c.s2Intro);
+        setList('s2-list',     c.s2List);
+        setText('s2-extra',    c.s2Extra);
+
+        setHTML('s3-title',    c.s3Title);
+        setText('s3-intro',    c.s3Intro);
+        setList('s3-list',     c.s3List);
+        setText('s3-extra',    c.s3Extra);
+
+        setHTML('s4-title',    c.s4Title);
+        setList('s4-list',     c.s4List);
+
+        setHTML('s5-title',    c.s5Title);
+        setText('s5-body',     c.s5Body);
+        setList('s5-list',     c.s5List);
+
+        setHTML('s6-title',    c.s6Title);
+        setHTML('s6-body',     c.s6Body);
+
+        setHTML('s7-title',    c.s7Title);
+        setHTML('s7-intro',    c.s7Intro);
+        setText('r1-title', c.r1Title); setHTML('r1-body', c.r1Body);
+        setText('r2-title', c.r2Title); setHTML('r2-body', c.r2Body);
+        setText('r3-title', c.r3Title); setHTML('r3-body', c.r3Body);
+        setText('r4-title', c.r4Title); setHTML('r4-body', c.r4Body);
+        setText('r5-title', c.r5Title); setHTML('r5-body', c.r5Body);
+        setText('r6-title', c.r6Title); setHTML('r6-body', c.r6Body);
+        setText('r7-title', c.r7Title); setHTML('r7-body', c.r7Body);
+        setText('r8-title', c.r8Title); setHTML('r8-body', c.r8Body);
+
+        setText('s8-title',    c.s8Title);
+        setText('s8-body',     c.s8Body);
+        setText('s9-title',    c.s9Title);
+        setText('s9-body',     c.s9Body);
+        setText('s10-title',   c.s10Title);
+        setText('s10-body',    c.s10Body);
+        setText('s11-title',   c.s11Title);
+        setText('s11-body',    c.s11Body);
+        setHTML('footer-text', c.footerText);
+
+        var btn = document.getElementById('langToggle');
+        if (btn) {
+            btn.textContent = c.langBtn;
+            btn.onclick = function() {
+                _lang = _lang === 'ar' ? 'en' : 'ar';
+                localStorage.setItem('imp-lang', _lang);
+                applyLanguage(_lang);
+            };
+        }
+    }
+
+    document.getElementById('langToggle').onclick = function() {
+        _lang = _lang === 'ar' ? 'en' : 'ar';
+        localStorage.setItem('imp-lang', _lang);
+        applyLanguage(_lang);
+    };
+
+    applyLanguage(_lang);
+    </script>
+</body>
+</html>

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IMP Douro — Admin</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -163,6 +164,92 @@
     .loading { text-align: center; padding: 2rem; color: var(--muted); font-size: .9rem; }
     .empty   { text-align: center; padding: 2rem; color: var(--muted); font-size: .9rem; }
 
+    /* ── SECTION TABS ── */
+    .section-tabs { display: flex; gap: .5rem; margin-bottom: 1.5rem; }
+    .tab-btn {
+      padding: .6rem 1.25rem; border-radius: 8px; font-size: .9rem; font-weight: 600;
+      cursor: pointer; border: 2px solid var(--border); background: var(--white);
+      color: var(--muted); transition: all .2s;
+    }
+    .tab-btn.active { border-color: var(--gold); background: var(--gold); color: var(--white); }
+
+    /* ── SERVICES ── */
+    .service-item {
+      padding: .85rem .5rem; border-bottom: 1px solid var(--border); transition: background .15s;
+    }
+    .service-item:last-child { border-bottom: none; }
+    .service-item:hover { background: #FAFAFA; border-radius: 8px; }
+    .service-item-row { display: flex; align-items: center; gap: .75rem; }
+    .service-icon-preview {
+      width: 40px; height: 40px; border-radius: 8px; flex-shrink: 0;
+      background: linear-gradient(135deg, #1A1A1A, #2d2410);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); font-size: 1.1rem;
+    }
+    .service-info { flex: 1; min-width: 0; }
+    .service-info strong { display: block; font-size: .95rem; font-weight: 600; }
+    .service-info span { display: block; font-size: .8rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* ── EDIT PANEL ── */
+    .edit-panel {
+      background: #F7FAFC; border-radius: 8px; padding: 1rem;
+      margin: .25rem .5rem .5rem; display: grid;
+      grid-template-columns: 1fr 1fr; gap: .75rem;
+    }
+    .edit-panel .full { grid-column: 1 / -1; }
+    .edit-panel label { display: block; font-size: .78rem; font-weight: 500; color: var(--muted); margin-bottom: .3rem; }
+    .edit-panel input, .edit-panel textarea {
+      width: 100%; padding: .5rem .75rem; border: 1.5px solid var(--border);
+      border-radius: 6px; font-size: .875rem; outline: none; font-family: inherit;
+      box-sizing: border-box;
+    }
+    .edit-panel input:focus, .edit-panel textarea:focus { border-color: var(--gold); }
+    .edit-panel textarea { resize: vertical; min-height: 72px; }
+    .edit-panel-actions { display: flex; gap: .5rem; grid-column: 1 / -1; justify-content: flex-end; margin-top: .25rem; }
+
+    .icon-preview-wrap { display: flex; align-items: center; gap: .6rem; }
+    .icon-preview-wrap .icon-preview-box {
+      width: 36px; height: 36px; border-radius: 6px; flex-shrink: 0;
+      background: linear-gradient(135deg, #1A1A1A, #2d2410);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); font-size: 1rem;
+    }
+    .icon-preview-wrap input { flex: 1; }
+
+    /* ── ADD SERVICE FORM ── */
+    .add-service-form { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+    .add-service-form .full { grid-column: 1 / -1; }
+    .add-service-form label { display: block; font-size: .8rem; font-weight: 500; color: var(--muted); margin-bottom: .4rem; }
+    .add-service-form input, .add-service-form textarea {
+      width: 100%; padding: .6rem .85rem; border: 1.5px solid var(--border);
+      border-radius: 8px; font-size: .875rem; outline: none; font-family: inherit;
+      box-sizing: border-box;
+    }
+    .add-service-form input:focus, .add-service-form textarea:focus { border-color: var(--gold); }
+    .add-service-form textarea { resize: vertical; min-height: 72px; }
+
+    /* Language section divider inside service forms */
+    .lang-divider {
+      grid-column: 1 / -1;
+      display: flex; align-items: center; gap: .75rem;
+      font-size: .75rem; font-weight: 600; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .05em;
+      margin: .25rem 0 -.125rem;
+    }
+    .lang-divider::before, .lang-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+    /* RTL inputs for Arabic fields */
+    .ar-input { direction: rtl; font-family: 'Cairo', 'Segoe UI', sans-serif; }
+    .icon-hints { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .4rem; }
+    .icon-hint {
+      width: 32px; height: 32px; border-radius: 6px; cursor: pointer;
+      background: var(--bg); border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); font-size: .95rem; transition: all .15s;
+    }
+    .icon-hint:hover, .icon-hint.selected { background: var(--gold); color: var(--white); border-color: var(--gold); }
+
     /* ── TOAST ── */
     #toast {
       position: fixed; bottom: 1.5rem; right: 1.5rem;
@@ -214,49 +301,169 @@
   </header>
 
   <main>
-    <!-- Add area -->
-    <div class="card">
-      <div class="card-header">
-        <div>
-          <h2>Add New Area</h2>
-          <p>Add a new location to the "Areas We Serve in Dubai" section</p>
+    <!-- Tabs -->
+    <div class="section-tabs">
+      <button class="tab-btn active" onclick="switchTab('areas')">Areas We Serve</button>
+      <button class="tab-btn" onclick="switchTab('services')">Services</button>
+      <button class="tab-btn" onclick="switchTab('packages')">Packages</button>
+    </div>
+
+    <!-- ══ AREAS TAB ══ -->
+    <div id="tab-areas">
+      <div class="card">
+        <div class="card-header">
+          <div><h2>Add New Area</h2><p>Add a new location to the "Areas We Serve in Dubai" section</p></div>
         </div>
-      </div>
-      <div class="add-form">
-        <div class="field">
-          <label>Area name</label>
-          <input type="text" id="new-area-name" placeholder="e.g. Al Barsha" onkeydown="if(event.key==='Enter') addArea()">
-        </div>
-        <div class="field">
-          <label>Image (optional)</label>
-          <div class="img-upload-wrap">
-            <label class="img-upload-label" id="new-img-label">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="8.5" cy="10.5" r="1.5" fill="currentColor"/><path d="M3 15l4-4 3 3 3-3.5 5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-              <span id="new-img-label-text">Choose image…</span>
-              <input type="file" id="new-area-image" accept="image/jpeg,image/png,image/webp" onchange="previewNewImage(this)">
-            </label>
+        <div class="add-form">
+          <div class="field">
+            <label>Area name</label>
+            <input type="text" id="new-area-name" placeholder="e.g. Al Barsha" onkeydown="if(event.key==='Enter') addArea()">
           </div>
+          <div class="field">
+            <label>Image (optional)</label>
+            <div class="img-upload-wrap">
+              <label class="img-upload-label" id="new-img-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="8.5" cy="10.5" r="1.5" fill="currentColor"/><path d="M3 15l4-4 3 3 3-3.5 5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+                <span id="new-img-label-text">Choose image…</span>
+                <input type="file" id="new-area-image" accept="image/jpeg,image/png,image/webp" onchange="previewNewImage(this)">
+              </label>
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="addArea()" id="add-btn" style="height:42px">+ Add</button>
         </div>
-        <button class="btn btn-primary" onclick="addArea()" id="add-btn" style="height:42px">+ Add</button>
+        <div id="new-img-preview" style="margin-top:.75rem;display:none">
+          <img id="new-img-preview-img" style="width:80px;height:80px;object-fit:cover;border-radius:8px;border:2px solid var(--gold)">
+          <button onclick="clearNewImage()" style="background:none;border:none;cursor:pointer;color:var(--danger);font-size:.8rem;margin-left:.5rem">✕ Remove</button>
+        </div>
       </div>
-      <div id="new-img-preview" style="margin-top:.75rem;display:none">
-        <img id="new-img-preview-img" style="width:80px;height:80px;object-fit:cover;border-radius:8px;border:2px solid var(--gold)">
-        <button onclick="clearNewImage()" style="background:none;border:none;cursor:pointer;color:var(--danger);font-size:.8rem;margin-left:.5rem">✕ Remove</button>
+      <div class="card">
+        <div class="card-header">
+          <div><h2>Areas We Serve in Dubai</h2><p id="areas-count">Loading...</p></div>
+        </div>
+        <ul class="areas-list" id="areas-list">
+          <li class="loading">Loading areas...</li>
+        </ul>
       </div>
     </div>
 
-    <!-- Areas list -->
-    <div class="card">
-      <div class="card-header">
-        <div>
-          <h2>Areas We Serve in Dubai</h2>
-          <p id="areas-count">Loading...</p>
+    <!-- ══ SERVICES TAB ══ -->
+    <div id="tab-services" style="display:none">
+      <div class="card">
+        <div class="card-header">
+          <div><h2>Add New Service</h2><p>Add a service card to the "Our Professional Services" section</p></div>
+        </div>
+        <div class="add-service-form">
+          <div>
+            <label>Title</label>
+            <input type="text" id="svc-title" placeholder="e.g. Plumbing Services Dubai">
+          </div>
+          <div>
+            <label>Contact key <span style="font-weight:400;color:var(--muted)">(used in contact form)</span></label>
+            <input type="text" id="svc-contact-key" placeholder="e.g. Plumbing">
+          </div>
+          <div class="full">
+            <label>Description</label>
+            <textarea id="svc-desc" placeholder="Short description of the service…"></textarea>
+          </div>
+          <div class="lang-divider">العربية — Arabic</div>
+          <div class="full">
+            <label>Title (عربي)</label>
+            <input type="text" id="svc-title-ar" class="ar-input" placeholder="مثال: خدمات السباكة في دبي" dir="rtl">
+          </div>
+          <div class="full">
+            <label>Description (عربي)</label>
+            <textarea id="svc-desc-ar" class="ar-input" placeholder="وصف مختصر للخدمة…" dir="rtl"></textarea>
+          </div>
+          <div class="full">
+            <label>Icon <span style="font-weight:400;color:var(--muted)">(Font Awesome class)</span></label>
+            <div class="icon-preview-wrap">
+              <div class="icon-preview-box" id="svc-icon-preview"><i class="fas fa-wrench"></i></div>
+              <input type="text" id="svc-icon" value="fa-wrench" placeholder="fa-wrench" oninput="updateIconPreview(this.value,'svc-icon-preview')">
+            </div>
+            <div class="icon-hints" style="margin-top:.5rem">
+              <div class="icon-hint selected" title="fa-wrench" onclick="pickIcon('fa-wrench','svc')"><i class="fas fa-wrench"></i></div>
+              <div class="icon-hint" title="fa-house" onclick="pickIcon('fa-house','svc')"><i class="fas fa-house"></i></div>
+              <div class="icon-hint" title="fa-paint-roller" onclick="pickIcon('fa-paint-roller','svc')"><i class="fas fa-paint-roller"></i></div>
+              <div class="icon-hint" title="fa-building" onclick="pickIcon('fa-building','svc')"><i class="fas fa-building"></i></div>
+              <div class="icon-hint" title="fa-leaf" onclick="pickIcon('fa-leaf','svc')"><i class="fas fa-leaf"></i></div>
+              <div class="icon-hint" title="fa-hammer" onclick="pickIcon('fa-hammer','svc')"><i class="fas fa-hammer"></i></div>
+              <div class="icon-hint" title="fa-bolt" onclick="pickIcon('fa-bolt','svc')"><i class="fas fa-bolt"></i></div>
+              <div class="icon-hint" title="fa-faucet" onclick="pickIcon('fa-faucet','svc')"><i class="fas fa-faucet"></i></div>
+              <div class="icon-hint" title="fa-snowflake" onclick="pickIcon('fa-snowflake','svc')"><i class="fas fa-snowflake"></i></div>
+              <div class="icon-hint" title="fa-broom" onclick="pickIcon('fa-broom','svc')"><i class="fas fa-broom"></i></div>
+              <div class="icon-hint" title="fa-tools" onclick="pickIcon('fa-tools','svc')"><i class="fas fa-tools"></i></div>
+              <div class="icon-hint" title="fa-hard-hat" onclick="pickIcon('fa-hard-hat','svc')"><i class="fas fa-hard-hat"></i></div>
+              <div class="icon-hint" title="fa-shower" onclick="pickIcon('fa-shower','svc')"><i class="fas fa-shower"></i></div>
+              <div class="icon-hint" title="fa-plug" onclick="pickIcon('fa-plug','svc')"><i class="fas fa-plug"></i></div>
+              <div class="icon-hint" title="fa-tree" onclick="pickIcon('fa-tree','svc')"><i class="fas fa-tree"></i></div>
+              <div class="icon-hint" title="fa-door-open" onclick="pickIcon('fa-door-open','svc')"><i class="fas fa-door-open"></i></div>
+            </div>
+          </div>
+          <div class="full" style="display:flex;justify-content:flex-end;margin-top:.25rem">
+            <button class="btn btn-primary" onclick="addService()" id="svc-add-btn">+ Add Service</button>
+          </div>
         </div>
       </div>
-      <ul class="areas-list" id="areas-list">
-        <li class="loading">Loading areas...</li>
-      </ul>
+      <div class="card">
+        <div class="card-header">
+          <div><h2>Our Professional Services</h2><p id="services-count">Loading...</p></div>
+        </div>
+        <ul class="areas-list" id="services-list">
+          <li class="loading">Loading services...</li>
+        </ul>
+      </div>
     </div>
+
+
+    <!-- ══ PACKAGES TAB ══ -->
+    <div id="tab-packages" style="display:none">
+      <div class="card">
+        <div class="card-header">
+          <div><h2>Add New Package</h2><p>Add a maintenance package to the "Villa Maintenance Packages" section</p></div>
+        </div>
+        <div class="add-service-form">
+          <div class="full">
+            <label>Package name</label>
+            <input type="text" id="pkg-title" placeholder="e.g. Basic Package">
+          </div>
+          <div>
+            <label>Badge <span style="font-weight:400;color:var(--muted)">(optional, e.g. "Most Popular")</span></label>
+            <input type="text" id="pkg-badge" placeholder="Most Popular">
+          </div>
+          <div style="display:flex;align-items:center;gap:.75rem;padding-top:1.6rem">
+            <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.875rem;font-weight:500;margin:0">
+              <input type="checkbox" id="pkg-featured" style="width:16px;height:16px;accent-color:var(--gold)">
+              Featured (highlighted card)
+            </label>
+          </div>
+          <div class="full">
+            <label>Features <span style="font-weight:400;color:var(--muted)">(one per line)</span></label>
+            <textarea id="pkg-features" rows="5" placeholder="AC Check &amp; Filter Change&#10;Basic Plumbing Inspection&#10;Light Bulb &amp; Fixture Check"></textarea>
+          </div>
+          <div class="lang-divider">العربية — Arabic</div>
+          <div class="full">
+            <label>Package name (عربي)</label>
+            <input type="text" id="pkg-title-ar" class="ar-input" placeholder="مثال: الباقة الأساسية" dir="rtl">
+          </div>
+          <div class="full">
+            <label>Features (عربي) <span style="font-weight:400;color:var(--muted)">(سطر واحد لكل ميزة)</span></label>
+            <textarea id="pkg-features-ar" class="ar-input" dir="rtl" rows="5" placeholder="فحص المكيف وتغيير الفلتر&#10;فحص السباكة الأساسي"></textarea>
+          </div>
+          <div class="full" style="display:flex;justify-content:flex-end;margin-top:.25rem">
+            <button class="btn btn-primary" onclick="addPackage()" id="pkg-add-btn">+ Add Package</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div><h2>Villa Maintenance Packages</h2><p id="packages-count">Loading...</p></div>
+        </div>
+        <ul class="areas-list" id="packages-list">
+          <li class="loading">Loading packages...</li>
+        </ul>
+      </div>
+    </div>
+
   </main>
 </div>
 
@@ -302,6 +509,22 @@
     document.getElementById('app-screen').style.display = 'block'
     document.getElementById('user-email').textContent = user.email
     loadAreas()
+    loadServices()
+    loadPackages()
+  }
+
+  // ── TABS ──────────────────────────────────────────
+  function switchTab(tab) {
+    document.getElementById('tab-areas').style.display    = tab === 'areas'    ? 'block' : 'none'
+    document.getElementById('tab-services').style.display = tab === 'services' ? 'block' : 'none'
+    document.getElementById('tab-packages').style.display = tab === 'packages' ? 'block' : 'none'
+    document.querySelectorAll('.tab-btn').forEach((b, i) => {
+      b.classList.toggle('active',
+        (i === 0 && tab === 'areas') ||
+        (i === 1 && tab === 'services') ||
+        (i === 2 && tab === 'packages')
+      )
+    })
   }
 
   // ── IMAGE HELPERS ─────────────────────────────────
@@ -533,6 +756,357 @@
     if (error) { toast('Error deleting. Try again.', 'error'); return }
     toast(`"${name}" deleted.`, 'success')
     loadAreas()
+  }
+
+  // ── SERVICES ──────────────────────────────────────
+  let editingSvcId = null
+
+  const ICON_SUGGESTIONS = ['fa-wrench','fa-house','fa-paint-roller','fa-building','fa-leaf','fa-hammer','fa-bolt','fa-faucet','fa-snowflake','fa-broom','fa-tools','fa-hard-hat','fa-shower','fa-plug','fa-tree','fa-door-open']
+
+  function updateIconPreview(val, previewId) {
+    const box = document.getElementById(previewId)
+    if (box) box.innerHTML = `<i class="fas ${val.trim() || 'fa-wrench'}"></i>`
+  }
+
+  function pickIcon(icon, prefix) {
+    document.getElementById(`${prefix}-icon`).value = icon
+    updateIconPreview(icon, `${prefix}-icon-preview`)
+    document.querySelectorAll('.icon-hints .icon-hint').forEach(el => {
+      el.classList.toggle('selected', el.title === icon)
+    })
+  }
+
+  async function loadServices() {
+    const list = document.getElementById('services-list')
+    list.innerHTML = '<li class="loading">Loading services...</li>'
+    const { data, error } = await sb.from('services').select('*').order('sort_order')
+    if (error) { list.innerHTML = '<li class="empty">Error loading services.</li>'; return }
+    document.getElementById('services-count').textContent = `${data.length} service${data.length !== 1 ? 's' : ''} configured`
+    renderServices(data)
+  }
+
+  function renderServices(services) {
+    const list = document.getElementById('services-list')
+    if (!services.length) { list.innerHTML = '<li class="empty">No services yet. Add one above.</li>'; return }
+    list.innerHTML = services.map(s => `
+      <li class="service-item" id="svc-item-${s.id}">
+        <div class="service-item-row">
+          <div class="service-icon-preview"><i class="fas ${escHtml(s.icon)}"></i></div>
+          <div class="service-info">
+            <strong>${escHtml(s.title)}</strong>
+            <span>${escHtml(s.description)}</span>
+            ${s.title_ar ? `<span style="direction:rtl;font-family:'Cairo','Segoe UI',sans-serif;color:var(--muted);font-size:.8rem;margin-top:.1rem">${escHtml(s.title_ar)}</span>` : '<span style="color:#e53e3e;font-size:.78rem">— Arabic missing</span>'}
+          </div>
+          <div class="area-actions">
+            <button class="btn btn-secondary btn-sm" onclick="startEditService(${s.id})">Edit</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteService(${s.id}, '${escAttr(s.title)}')">Delete</button>
+          </div>
+        </div>
+      </li>
+    `).join('')
+  }
+
+  function startEditService(id) {
+    if (editingSvcId && editingSvcId !== id) cancelEditService(editingSvcId)
+    editingSvcId = id
+    const item = document.getElementById(`svc-item-${id}`)
+    const row = item.querySelector('.service-item-row')
+    const title = row.querySelector('.service-info strong').textContent
+    const desc  = row.querySelector('.service-info span').textContent
+    const icon  = row.querySelector('.service-icon-preview i').className.replace('fas ','').trim()
+    const contactKey = '' // we'll load from DB
+
+    // Load full record including Arabic fields
+    sb.from('services').select('contact_key, title_ar, description_ar').eq('id', id).single().then(({ data }) => {
+      const ck      = data?.contact_key    || ''
+      const titleAr = data?.title_ar       || ''
+      const descAr  = data?.description_ar || ''
+      const panel = document.createElement('div')
+      panel.id = `svc-panel-${id}`
+      panel.className = 'edit-panel'
+      panel.innerHTML = `
+        <div>
+          <label>Title</label>
+          <input type="text" id="svc-edit-title-${id}" value="${escAttr(title)}">
+        </div>
+        <div>
+          <label>Contact key</label>
+          <input type="text" id="svc-edit-ck-${id}" value="${escAttr(ck)}">
+        </div>
+        <div class="full">
+          <label>Description</label>
+          <textarea id="svc-edit-desc-${id}">${escHtml(desc)}</textarea>
+        </div>
+        <div class="lang-divider">العربية — Arabic</div>
+        <div class="full">
+          <label>Title (عربي)</label>
+          <input type="text" id="svc-edit-title-ar-${id}" class="ar-input" dir="rtl" value="${escAttr(titleAr)}">
+        </div>
+        <div class="full">
+          <label>Description (عربي)</label>
+          <textarea id="svc-edit-desc-ar-${id}" class="ar-input" dir="rtl">${escHtml(descAr)}</textarea>
+        </div>
+        <div class="full">
+          <label>Icon</label>
+          <div class="icon-preview-wrap">
+            <div class="icon-preview-box" id="svc-edit-preview-${id}"><i class="fas ${escHtml(icon)}"></i></div>
+            <input type="text" id="svc-edit-icon-${id}" value="${escAttr(icon)}" oninput="updateIconPreview(this.value,'svc-edit-preview-${id}')">
+          </div>
+          <div class="icon-hints" style="margin-top:.5rem">
+            ${ICON_SUGGESTIONS.map(ic => `<div class="icon-hint${ic===icon?' selected':''}" title="${ic}" onclick="pickEditIcon('${ic}',${id})"><i class="fas ${ic}"></i></div>`).join('')}
+          </div>
+        </div>
+        <div class="edit-panel-actions">
+          <button class="btn btn-secondary btn-sm" onclick="cancelEditService(${id})">Cancel</button>
+          <button class="btn btn-primary btn-sm" onclick="saveService(${id})">Save</button>
+        </div>
+      `
+      item.after(panel)
+      // swap buttons
+      item.querySelector('.area-actions').innerHTML = `
+        <button class="btn btn-secondary btn-sm" onclick="cancelEditService(${id})">Cancel</button>
+      `
+    })
+  }
+
+  function pickEditIcon(icon, id) {
+    document.getElementById(`svc-edit-icon-${id}`).value = icon
+    updateIconPreview(icon, `svc-edit-preview-${id}`)
+    document.querySelectorAll(`#svc-panel-${id} .icon-hint`).forEach(el => {
+      el.classList.toggle('selected', el.title === icon)
+    })
+  }
+
+  function cancelEditService(id) {
+    editingSvcId = null
+    document.getElementById(`svc-panel-${id}`)?.remove()
+    loadServices()
+  }
+
+  async function saveService(id) {
+    const title   = document.getElementById(`svc-edit-title-${id}`).value.trim()
+    const desc    = document.getElementById(`svc-edit-desc-${id}`).value.trim()
+    const icon    = document.getElementById(`svc-edit-icon-${id}`).value.trim()
+    const ck      = document.getElementById(`svc-edit-ck-${id}`).value.trim()
+    const titleAr = document.getElementById(`svc-edit-title-ar-${id}`).value.trim()
+    const descAr  = document.getElementById(`svc-edit-desc-ar-${id}`).value.trim()
+    if (!title || !desc || !icon || !ck) { toast('All fields are required.', 'error'); return }
+    const { error } = await sb.from('services').update({ title, description: desc, icon, contact_key: ck, title_ar: titleAr || null, description_ar: descAr || null }).eq('id', id)
+    if (error) { toast('Error saving. Try again.', 'error'); return }
+    editingSvcId = null
+    document.getElementById(`svc-panel-${id}`)?.remove()
+    toast(`"${title}" updated.`, 'success')
+    loadServices()
+  }
+
+  async function addService() {
+    const title   = document.getElementById('svc-title').value.trim()
+    const desc    = document.getElementById('svc-desc').value.trim()
+    const icon    = document.getElementById('svc-icon').value.trim()
+    const ck      = document.getElementById('svc-contact-key').value.trim()
+    const titleAr = document.getElementById('svc-title-ar').value.trim()
+    const descAr  = document.getElementById('svc-desc-ar').value.trim()
+    const btn     = document.getElementById('svc-add-btn')
+    if (!title || !desc || !icon || !ck) { toast('All fields are required.', 'error'); return }
+    btn.disabled = true; btn.textContent = 'Adding...'
+    try {
+      const { data: max } = await sb.from('services').select('sort_order').order('sort_order', { ascending: false }).limit(1)
+      const nextOrder = max?.length ? max[0].sort_order + 1 : 1
+      const { error } = await sb.from('services').insert({ title, description: desc, icon, contact_key: ck, title_ar: titleAr || null, description_ar: descAr || null, sort_order: nextOrder })
+      if (error) throw error
+      document.getElementById('svc-title').value = ''
+      document.getElementById('svc-desc').value = ''
+      document.getElementById('svc-contact-key').value = ''
+      document.getElementById('svc-title-ar').value = ''
+      document.getElementById('svc-desc-ar').value = ''
+      pickIcon('fa-wrench', 'svc')
+      toast(`"${title}" added.`, 'success')
+      loadServices()
+    } catch(e) {
+      toast('Error adding service. Try again.', 'error')
+    } finally {
+      btn.disabled = false; btn.textContent = '+ Add Service'
+    }
+  }
+
+  async function deleteService(id, title) {
+    if (!confirm(`Delete "${title}"? This cannot be undone.`)) return
+    const { error } = await sb.from('services').delete().eq('id', id)
+    if (error) { toast('Error deleting. Try again.', 'error'); return }
+    toast(`"${title}" deleted.`, 'success')
+    loadServices()
+  }
+
+
+  // ── PACKAGES ──────────────────────────────────────
+  let editingPkgId = null
+
+  async function loadPackages() {
+    const list = document.getElementById('packages-list')
+    list.innerHTML = '<li class="loading">Loading packages...</li>'
+    const { data, error } = await sb.from('packages').select('*').order('sort_order')
+    if (error) { list.innerHTML = '<li class="empty">Error loading packages.</li>'; return }
+    document.getElementById('packages-count').textContent = `${data.length} package${data.length !== 1 ? 's' : ''} configured`
+    renderPackages(data)
+  }
+
+  function renderPackages(pkgs) {
+    const list = document.getElementById('packages-list')
+    if (!pkgs.length) { list.innerHTML = '<li class="empty">No packages yet. Add one above.</li>'; return }
+    list.innerHTML = pkgs.map(p => {
+      const features = Array.isArray(p.features) ? p.features : []
+      return `
+        <li class="service-item" id="pkg-item-${p.id}">
+          <div class="service-item-row">
+            <div class="service-icon-preview"><i class="fas fa-box-open"></i></div>
+            <div class="service-info">
+              <strong>${escHtml(p.title)}${p.is_featured ? ' <span style="font-size:.7rem;background:#C6F6D5;color:#276749;padding:.15rem .45rem;border-radius:99px;font-weight:600;vertical-align:middle">Featured</span>' : ''}</strong>
+              <span>${features.length} feature${features.length !== 1 ? 's' : ''}${p.badge ? ' · ' + escHtml(p.badge) : ''}</span>
+              ${p.title_ar
+                ? `<span style="direction:rtl;font-family:'Cairo','Segoe UI',sans-serif;color:var(--muted);font-size:.8rem;margin-top:.1rem">${escHtml(p.title_ar)}</span>`
+                : '<span style="color:#e53e3e;font-size:.78rem">— Arabic missing</span>'}
+            </div>
+            <div class="area-actions">
+              <button class="btn btn-secondary btn-sm" onclick="startEditPackage(${p.id})">Edit</button>
+              <button class="btn btn-danger btn-sm" onclick="deletePackage(${p.id}, '${escAttr(p.title)}')">Delete</button>
+            </div>
+          </div>
+        </li>
+      `
+    }).join('')
+  }
+
+  function startEditPackage(id) {
+    if (editingPkgId && editingPkgId !== id) cancelEditPackage(editingPkgId)
+    editingPkgId = id
+
+    sb.from('packages').select('*').eq('id', id).single().then(({ data: p }) => {
+      if (!p) return
+      const features    = Array.isArray(p.features)    ? p.features.join('\n')    : ''
+      const featuresAr  = Array.isArray(p.features_ar) ? p.features_ar.join('\n') : ''
+      const item = document.getElementById(`pkg-item-${id}`)
+      const panel = document.createElement('div')
+      panel.id = `pkg-panel-${id}`
+      panel.className = 'edit-panel'
+      panel.innerHTML = `
+        <div class="full">
+          <label>Package name</label>
+          <input type="text" id="pkg-edit-title-${id}" value="${escAttr(p.title)}">
+        </div>
+        <div>
+          <label>Badge</label>
+          <input type="text" id="pkg-edit-badge-${id}" value="${escAttr(p.badge || '')}">
+        </div>
+        <div style="display:flex;align-items:center;gap:.75rem;padding-top:1.6rem">
+          <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.875rem;font-weight:500;margin:0">
+            <input type="checkbox" id="pkg-edit-featured-${id}" ${p.is_featured ? 'checked' : ''} style="width:16px;height:16px;accent-color:var(--gold)">
+            Featured
+          </label>
+        </div>
+        <div class="full">
+          <label>Features <span style="font-weight:400;color:var(--muted)">(one per line)</span></label>
+          <textarea id="pkg-edit-features-${id}" rows="5">${escHtml(features)}</textarea>
+        </div>
+        <div class="lang-divider">العربية — Arabic</div>
+        <div class="full">
+          <label>Package name (عربي)</label>
+          <input type="text" id="pkg-edit-title-ar-${id}" class="ar-input" dir="rtl" value="${escAttr(p.title_ar || '')}">
+        </div>
+        <div class="full">
+          <label>Features (عربي)</label>
+          <textarea id="pkg-edit-features-ar-${id}" class="ar-input" dir="rtl" rows="5">${escHtml(featuresAr)}</textarea>
+        </div>
+        <div class="edit-panel-actions">
+          <button class="btn btn-secondary btn-sm" onclick="cancelEditPackage(${id})">Cancel</button>
+          <button class="btn btn-primary btn-sm" onclick="savePackage(${id})">Save</button>
+        </div>
+      `
+      item.after(panel)
+      item.querySelector('.area-actions').innerHTML = `
+        <button class="btn btn-secondary btn-sm" onclick="cancelEditPackage(${id})">Cancel</button>
+      `
+    })
+  }
+
+  function cancelEditPackage(id) {
+    editingPkgId = null
+    document.getElementById(`pkg-panel-${id}`)?.remove()
+    loadPackages()
+  }
+
+  async function savePackage(id) {
+    const title      = document.getElementById(`pkg-edit-title-${id}`).value.trim()
+    const badge      = document.getElementById(`pkg-edit-badge-${id}`).value.trim()
+    const featured   = document.getElementById(`pkg-edit-featured-${id}`).checked
+    const featRaw    = document.getElementById(`pkg-edit-features-${id}`).value
+    const featArRaw  = document.getElementById(`pkg-edit-features-ar-${id}`).value
+    const titleAr    = document.getElementById(`pkg-edit-title-ar-${id}`).value.trim()
+
+    if (!title) { toast('Package name is required.', 'error'); return }
+
+    const features    = featRaw.split('\n').map(s => s.trim()).filter(Boolean)
+    const features_ar = featArRaw.split('\n').map(s => s.trim()).filter(Boolean)
+
+    const { error } = await sb.from('packages').update({
+      title, badge: badge || null, is_featured: featured,
+      features, features_ar: features_ar.length ? features_ar : null,
+      title_ar: titleAr || null
+    }).eq('id', id)
+
+    if (error) { toast('Error saving. Try again.', 'error'); return }
+    editingPkgId = null
+    document.getElementById(`pkg-panel-${id}`)?.remove()
+    toast(`"${title}" updated.`, 'success')
+    loadPackages()
+  }
+
+  async function addPackage() {
+    const title      = document.getElementById('pkg-title').value.trim()
+    const badge      = document.getElementById('pkg-badge').value.trim()
+    const featured   = document.getElementById('pkg-featured').checked
+    const featRaw    = document.getElementById('pkg-features').value
+    const featArRaw  = document.getElementById('pkg-features-ar').value
+    const titleAr    = document.getElementById('pkg-title-ar').value.trim()
+    const btn        = document.getElementById('pkg-add-btn')
+
+    if (!title) { toast('Package name is required.', 'error'); return }
+
+    const features    = featRaw.split('\n').map(s => s.trim()).filter(Boolean)
+    const features_ar = featArRaw.split('\n').map(s => s.trim()).filter(Boolean)
+
+    btn.disabled = true; btn.textContent = 'Adding...'
+    try {
+      const { data: max } = await sb.from('packages').select('sort_order').order('sort_order', { ascending: false }).limit(1)
+      const nextOrder = max?.length ? max[0].sort_order + 1 : 1
+
+      const { error } = await sb.from('packages').insert({
+        title, badge: badge || null, is_featured: featured,
+        features, features_ar: features_ar.length ? features_ar : null,
+        title_ar: titleAr || null, sort_order: nextOrder
+      })
+      if (error) throw error
+
+      document.getElementById('pkg-title').value      = ''
+      document.getElementById('pkg-badge').value      = ''
+      document.getElementById('pkg-featured').checked  = false
+      document.getElementById('pkg-features').value    = ''
+      document.getElementById('pkg-features-ar').value = ''
+      document.getElementById('pkg-title-ar').value    = ''
+      toast(`"${title}" added.`, 'success')
+      loadPackages()
+    } catch(e) {
+      toast('Error adding package. Try again.', 'error')
+    } finally {
+      btn.disabled = false; btn.textContent = '+ Add Package'
+    }
+  }
+
+  async function deletePackage(id, title) {
+    if (!confirm(`Delete "${title}"? This cannot be undone.`)) return
+    const { error } = await sb.from('packages').delete().eq('id', id)
+    if (error) { toast('Error deleting. Try again.', 'error'); return }
+    toast(`"${title}" deleted.`, 'success')
+    loadPackages()
   }
 
   // ── HELPERS ───────────────────────────────────────
